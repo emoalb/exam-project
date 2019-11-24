@@ -1,12 +1,12 @@
 package com.exam.examproject.domain.entities;
 
+import com.exam.examproject.domain.enums.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -20,4 +20,9 @@ public class User extends BaseEntity {
     private String password;
     @Column(name = "email")
     private String email;
+    @Enumerated(EnumType.STRING
+    )
+    @Column(name = "role")
+    private UserRole role = UserRole.USER;
+
 }
