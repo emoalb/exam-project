@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{_shared/head}"/>
+<body>
+<th:block th:include="~{_shared/header}"/>
+<div class="container">
+    <th:block th:include="${view}"></th:block>
+</div>
+</body>
+</html>
