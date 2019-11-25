@@ -1,12 +1,12 @@
 package com.exam.examproject.domain.entities;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -16,6 +16,7 @@ import javax.persistence.MappedSuperclass;
 @NoArgsConstructor
 public abstract class BaseEntity {
 @Id
+@GeneratedValue(generator = "uuid-string")
 @GenericGenerator(
         name = "uuid-string",
         strategy = "org.hibernate.id.UUIDGenerator"
