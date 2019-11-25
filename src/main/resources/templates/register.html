@@ -1,10 +1,10 @@
 <th:block th:fragment>
     <h2>Register</h2>
     <br/>
-    <form th:action="@{/register}" th:method="post">
+    <form th:action="@{/users/register}" th:method="post">
         <div class="form-group">
-            <label for="username">User name</label>
-            <input type="text" class="form-control" name="username" id="username" placeholder="User name">
+            <label for="username-register">User name</label>
+            <input type="text" class="form-control" name="username" id="username-register" placeholder="User name">
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
@@ -13,8 +13,8 @@
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            <label for="password-register">Password</label>
+            <input type="password" class="form-control" name="password" id="password-register" placeholder="Password">
         </div>
         <div class="form-group">
             <label for="repeat-password">Repeat password</label>
@@ -23,9 +23,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <th:block th:if="${session.message!=null}">
-    <div class="alert alert-danger message" role="alert">
-    [[${session.message}]]
-    </div>
-    </th:block>
+
 </th:block>

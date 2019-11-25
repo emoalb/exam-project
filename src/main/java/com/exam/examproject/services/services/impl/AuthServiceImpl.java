@@ -2,13 +2,18 @@ package com.exam.examproject.services.services.impl;
 
 import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.repositories.UserRepository;
+import com.exam.examproject.services.models.LoginResponseModel;
+import com.exam.examproject.services.models.LoginUserServiceModel;
 import com.exam.examproject.services.models.RegisterUserServiceModel;
 import com.exam.examproject.services.services.AuthService;
 import com.exam.examproject.services.services.AuthValidationService;
 import com.exam.examproject.services.services.HashingService;
+import com.exam.examproject.web.models.LoginUserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -30,10 +35,20 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void register(RegisterUserServiceModel registerUserServiceModel) throws Exception {
         if (!authValidationService.isValid(registerUserServiceModel)) {
-        throw new Exception("Invalid user data");
+            throw new Exception("Invalid user data");
         }
-        User user = this.modelMapper.map(registerUserServiceModel,User.class);
+        User user = this.modelMapper.map(registerUserServiceModel, User.class);
         user.setPassword(this.hashingService.hash(user.getPassword()));
         this.userRepository.save(user);
+    }
+
+    @Override
+    public LoginResponseModel login(LoginUserServiceModel loginUserServiceModel) throws Exception {
+        Optional<User> userOptional = this.userRepository.findByUsernameAndPassword(loginUserServiceModel.getUsername(), this.hashingService.hash(loginUserServiceModel.getPassword()));
+        if (userOptional.isEmpty()) {
+            throw new Exception("Invalid user");
+        }
+        User user = userOptional.get();
+        return new LoginResponseModel(user.getUsername());
     }
 }

@@ -5,6 +5,11 @@
 <th:block th:include="~{_shared/header}"/>
 <div class="container">
     <th:block th:include="${view}"></th:block>
+    <th:block th:if="${message!=null}">
+        <div class="alert alert-danger message" role="alert">
+            [[${message}]]
+        </div>
+    </th:block>
 </div>
 </body>
 </html>
