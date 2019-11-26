@@ -7,6 +7,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +25,8 @@ public class User extends BaseEntity {
     )
     @Column(name = "role")
     private UserRole role = UserRole.USER;
+
+    @OneToMany(mappedBy = "creator")
+    private List<Post> posts;
 
 }

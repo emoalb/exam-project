@@ -40,6 +40,12 @@ public class AuthController extends BaseController {
         return super.render("login");
     }
 
+    @GetMapping("/logout")
+    public ModelAndView getLogout(HttpSession session) {
+        session.setAttribute("user",null);
+        return super.redirect("/");
+    }
+
     @PostMapping("/register")
     public ModelAndView postRegisterForm(@ModelAttribute RegisterUserViewModel registerUserViewModel, HttpSession session) {
         RegisterUserServiceModel registerUserServiceModel = this.modelMapper.map(registerUserViewModel, RegisterUserServiceModel.class);
@@ -65,7 +71,6 @@ public class AuthController extends BaseController {
             System.out.println(e.getMessage());
             return super.render("login","message",e.getMessage());
         }
-
         return super.redirect("/");
     }
 }

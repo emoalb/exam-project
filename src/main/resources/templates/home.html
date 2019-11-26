@@ -1,9 +1,10 @@
 <th:block th:fragment>
     <th:block th:unless ="${session.user!=null}">
-    <h2>Welcome</h2>
-    <p>Please log in to view content</p>
+    <h2>Welcome!
+        <small class="text-muted">Please log in to view content</small>
+    </h2>
         </th:block>
     <th:block th:if="${session.user!=null}">
-        <h3>Welcome [[${session.user.username}]]!</h3>
+        <h3>Welcome [[${#strings.capitalize(session.user.username)}]]!</h3>
     </th:block>
 </th:block>

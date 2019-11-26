@@ -10,6 +10,15 @@
                 <li class="nav-item">
                     <a th:href="@{/}" class="nav-link">  Home</a>
                 </li>
+                <th:block th:unless="${session.user==null}">
+                    <li class="nav-item">
+                        <a class="nav-link"  th:href="@{/posts/new}">Create new post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/users/logout}" class="nav-link" >Logout</a>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.user==null}">
                 <li class="nav-item">
                     <a class="nav-link"  th:href="@{/users/login}">Login</a>
                 </li>
@@ -19,6 +28,7 @@
                 <li class="nav-item">
                     <a th:href="@{/about}" class="nav-link" >About</a>
                 </li>
+                </th:block>
             </ul>
         </div>
     </nav>
