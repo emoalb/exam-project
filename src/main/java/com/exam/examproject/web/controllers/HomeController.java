@@ -20,7 +20,7 @@ private final PostsService postsService;
     @GetMapping("/")
     public ModelAndView getHomePage() {
         List<PostServiceModel> postServiceModels =  this.postsService.getAllPosts();
-        return super.render("home");
+        return super.render("home","posts",postServiceModels);
 
     }
 }
