@@ -1,26 +1,11 @@
 <th:block th:fragment>
     <th:block th:unless="${session.user!=null}">
-        <h2>Welcome!
-            <small class="text-muted">Please log in to view content</small>
-        </h2>
+        <th:block th:include="~{_fragments/home-guest}"/>
     </th:block>
     <th:block th:if="${session.user!=null}">
-        <div class="row">
-            <div class="col">
-                <h3>Welcome [[${#strings.capitalize(session.user.username)}]]!</h3>
-            </div>
-        </div>
+        <th:block th:include="~{_fragments/home-logged-head}"/>
         <th:block th:if="${posts.empty}">
-            <div class="row">
-                <div class="col">
-                    <h4>No posts yet!</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p>Use create post...</p>
-                </div>
-            </div>
+            <th:block th:include="~{_fragments/home-posts-empty}"/>
         </th:block>
         <th:block th:unless="${posts.empty}">
             <div class="row">
@@ -28,18 +13,7 @@
                     <h4>All posts</h4>
                 </div>
             </div>
-            <th:block th:each="post : ${posts}">
-                <div class="card" style="width: 18rem;">
-                    <img th:src="${post.pictureUrl}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">[[${post.title}]]</h5>
-                        <p class="card-text">[[${post.description}]]</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </th:block>
+            <th:block th:include="~{_fragments/home-posts-all}"/>
         </th:block>
-
     </th:block>
-
 </th:block>

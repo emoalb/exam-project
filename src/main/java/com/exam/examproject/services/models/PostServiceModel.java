@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostServiceModel {
+    private String id;
+
     private String title;
 
     private String pictureUrl;

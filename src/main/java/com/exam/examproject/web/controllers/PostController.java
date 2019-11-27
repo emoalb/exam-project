@@ -7,10 +7,7 @@ import com.exam.examproject.web.models.CreatePostViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -43,6 +40,11 @@ public class PostController extends BaseController {
         } catch (Exception e) {
             return super.render("/","message",e.getMessage());
         }
+        return super.redirect("/");
+    }
+    @GetMapping("/edit")
+    public ModelAndView getEditPost(@RequestParam(value = "id", required = true) String id){
+        System.out.println(id);
         return super.redirect("/");
     }
 }

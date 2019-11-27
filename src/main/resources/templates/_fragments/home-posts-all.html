@@ -1,0 +1,13 @@
+<th:block th:fragment>
+    <th:block th:each="post : ${posts}">
+        <div class="card" style="width: 18rem;">
+            <img th:src="${post.pictureUrl}" class="card-img-top" alt="Image for ">
+            <div class="card-body">
+                <p>[[${post.id}]]</p>
+                <h5 class="card-title">[[${#strings.capitalize(post.title)}]]</h5>
+                <p class="card-text">[[${post.description}]]</p>
+                <a th:href="@{/posts/edit(id=${post.id})}" class="btn btn-primary">Edit</a>
+            </div>
+        </div>
+    </th:block>
+</th:block>

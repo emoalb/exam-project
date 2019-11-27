@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreatePostServiceModel {
 
+
     private String title;
 
     private String pictureUrl;
@@ -22,5 +23,6 @@ public class CreatePostServiceModel {
         this.pictureUrl = pictureUrl;
         this.description = description;
         this.creator_id = creator_id;
+
     }
 }
