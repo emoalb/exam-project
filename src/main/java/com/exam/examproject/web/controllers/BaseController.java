@@ -10,6 +10,7 @@ public abstract class BaseController {
         modelAndView.addObject("view", viewName);
         return modelAndView;
     }
+
     public ModelAndView render(String viewName, String attrName, Object object) {
         ModelAndView modelAndView = new ModelAndView("_layouts/index");
         modelAndView.addObject(attrName, object);

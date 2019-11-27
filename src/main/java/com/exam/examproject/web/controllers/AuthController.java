@@ -52,7 +52,7 @@ public class AuthController extends BaseController {
         try {
             this.authService.register(registerUserServiceModel);
         } catch (Exception e) {
-            session.setAttribute("message", e.getMessage());
+         //   session.setAttribute("message", e.getMessage());
             System.out.println(e.getMessage());
             return super.render("register","message",e.getMessage());
         }

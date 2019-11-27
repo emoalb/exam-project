@@ -18,8 +18,9 @@ public class Post extends BaseEntity {
     private String pictureUrl;
     @Column(name="description")
     private String description;
+
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="creator_id", nullable=false)
+    @JoinColumn(name="creator_id",referencedColumnName = "id",nullable=false)
     private User creator;
 
 }

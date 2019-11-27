@@ -15,18 +15,18 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-    @Column(name = "username")
+    @Column(name = "username",unique = true, nullable =  false)
     private String username;
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
-    @Column(name = "email")
+    @Column(name = "email",unique = true,nullable = false)
     private String email;
     @Enumerated(EnumType.STRING
     )
     @Column(name = "role")
     private UserRole role = UserRole.USER;
 
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(targetEntity = Post.class,mappedBy = "creator",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Post> posts;
 
 }

@@ -49,6 +49,6 @@ public class AuthServiceImpl implements AuthService {
             throw new Exception("Invalid user");
         }
         User user = userOptional.get();
-        return new LoginResponseModel(user.getUsername());
+        return new LoginResponseModel(user.getId(),user.getUsername());
     }
 }

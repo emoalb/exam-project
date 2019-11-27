@@ -1,0 +1,19 @@
+<th:block th:fragment>
+    <h2>Create new post</h2>
+    <br/>
+    <form th:action="@{/posts/new}" th:method="post">
+        <div class="form-group">
+            <label for="post-title">Title</label>
+            <input type="text" class="form-control" name="title" id="post-title" placeholder="Title of post">
+        </div>
+        <div class="form-group">
+            <label for="post-url">Attach image for post</label>
+            <input type="text" class="form-control" name="pictureUrl" id="post-url" placeholder="URL for image">
+        </div>
+        <div class="form-group">
+            <label for="post-description">User name</label>
+            <input type="text" class="form-control" name="description" id="post-description" placeholder="Post description">
+        </div>
+        <button type="submit" class="btn btn-primary">Create new post</button>
+    </form>
+</th:block>
