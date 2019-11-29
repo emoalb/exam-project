@@ -11,7 +11,7 @@ $('#button-edit').click(()=>{
             "Content-Type": "application/json"
 },
         method: 'POST',
-        data:{title,pictureUrl,description}
+        data:JSON.stringify({title,pictureUrl,description})
     });
 })
 });
