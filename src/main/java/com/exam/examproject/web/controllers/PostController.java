@@ -6,6 +6,7 @@ import com.exam.examproject.services.services.PostsService;
 import com.exam.examproject.web.models.CreatePostViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,6 +46,12 @@ public class PostController extends BaseController {
     @GetMapping("/edit")
     public ModelAndView getEditPost(@RequestParam(value = "id", required = true) String id){
         System.out.println(id);
+        return super.render("posts/edit");
+    }
+    @RequestMapping(value = "/edit", method = RequestMethod.POST,consumes= MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody   public ModelAndView putEditPost(@RequestBody String createPostServiceModel){
+        System.out.println(createPostServiceModel);
         return super.redirect("/");
     }
+
 }
