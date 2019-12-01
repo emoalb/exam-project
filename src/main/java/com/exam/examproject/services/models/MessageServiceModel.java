@@ -7,15 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostServiceModel {
-
+public class MessageServiceModel {
     private String id;
-
-    private String title;
-
-    private String pictureUrl;
-
-    private String description;
-
-    private String creatorUsername;
+    private String message;
+    private String sendUserUsername;
+    private String receiveUserUsername;
 }

@@ -1,0 +1,10 @@
+<th:block th:fragment>
+    <th:block th:if="${messages!=null}">
+    <th:block th:each="message : ${messages}">
+        <div class="card" style="width: 18rem;">
+                <h5 class="card-title">Message: [[${message.message}]]</h5>
+                <p class="card-text">From [[${message.sendUserUsername}]]</p>
+            </div>
+    </th:block>
+    </th:block>
+</th:block>

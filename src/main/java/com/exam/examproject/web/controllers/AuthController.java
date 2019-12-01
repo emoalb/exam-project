@@ -42,7 +42,7 @@ public class AuthController extends BaseController {
 
     @GetMapping("/logout")
     public ModelAndView getLogout(HttpSession session) {
-        session.setAttribute("user",null);
+        session.setAttribute("user", null);
         return super.redirect("/");
     }
 
@@ -52,9 +52,7 @@ public class AuthController extends BaseController {
         try {
             this.authService.register(registerUserServiceModel);
         } catch (Exception e) {
-         //   session.setAttribute("message", e.getMessage());
-            System.out.println(e.getMessage());
-            return super.render("register","message",e.getMessage());
+            return super.renderWithError("register", e.getMessage());
         }
 
         return super.redirect("/users/login");
@@ -67,9 +65,7 @@ public class AuthController extends BaseController {
             LoginResponseModel loginResponseModel = this.authService.login(loginUserServiceModel);
             session.setAttribute("user", loginResponseModel);
         } catch (Exception e) {
-         //   session.setAttribute("message", e.getMessage());
-            System.out.println(e.getMessage());
-            return super.render("login","message",e.getMessage());
+            return super.renderWithError("login", e.getMessage());
         }
         return super.redirect("/");
     }

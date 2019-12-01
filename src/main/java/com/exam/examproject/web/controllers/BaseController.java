@@ -10,6 +10,12 @@ public abstract class BaseController {
         modelAndView.addObject("view", viewName);
         return modelAndView;
     }
+    public ModelAndView renderWithError(String viewName, String message){
+        ModelAndView modelAndView = new ModelAndView("_layouts/index");
+        modelAndView.addObject("view", viewName);
+        modelAndView.addObject("message", message);
+        return modelAndView;
+    }
 
     public ModelAndView render(String viewName, String attrName, Object object) {
         ModelAndView modelAndView = new ModelAndView("_layouts/index");

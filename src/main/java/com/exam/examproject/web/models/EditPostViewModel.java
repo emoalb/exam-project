@@ -1,21 +1,30 @@
-package com.exam.examproject.services.models;
+package com.exam.examproject.web.models;
 
+import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostServiceModel {
+public class EditPostViewModel implements Serializable {
 
+    @Expose
     private String id;
 
+    @Expose
     private String title;
 
+    @Expose
     private String pictureUrl;
 
+    @Expose
     private String description;
 
+    @Expose
     private String creatorUsername;
+
 }

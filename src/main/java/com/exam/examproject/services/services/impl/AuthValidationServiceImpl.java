@@ -23,18 +23,20 @@ public class AuthValidationServiceImpl implements AuthValidationService {
     public boolean isValid(RegisterUserServiceModel userServiceModel) {
         return this.isEmailValid(userServiceModel.getEmail())
                 && this.arePasswordsValid(userServiceModel.getPassword(), userServiceModel.getRepeatPassword())
-                && this.isUsernameFree(userServiceModel.getUsername());
+                && this.isUsernameValid(userServiceModel.getUsername());
     }
 
     private boolean arePasswordsValid(String password, String confirmPassword) {
         return password.equals(confirmPassword);
     }
 
-    private boolean isUsernameFree(String username) {
-        return this.userRepository.findByUsername(username).isEmpty();
+    private boolean isUsernameValid(String username) {
+        return username.length()!=0 && this.userRepository.findByUsername(username).isEmpty();
     }
 
-    private boolean isEmailValid(String email) {
-        return true;
+    private boolean isEmailValid(String email)
+    {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
     }
 }

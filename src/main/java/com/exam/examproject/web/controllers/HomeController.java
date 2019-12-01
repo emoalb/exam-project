@@ -12,6 +12,7 @@ import java.util.List;
 @Controller
 public class HomeController extends BaseController {
 private final PostsService postsService;
+
 @Autowired
     public HomeController(PostsService postsService) {
         this.postsService = postsService;

@@ -26,7 +26,11 @@ public class User extends BaseEntity {
     @Column(name = "role")
     private UserRole role = UserRole.USER;
 
-    @OneToMany(targetEntity = Post.class,mappedBy = "creator",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Post.class,mappedBy = "creator",fetch = FetchType.LAZY,cascade = CascadeType.ALL )
     private List<Post> posts;
+    @OneToMany(targetEntity = Message.class,mappedBy = "sendUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL )
+    private List<Message> sentMessages;
+    @OneToMany(targetEntity = Message.class,mappedBy = "receiveUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL )
+    private List<Message> receivedMessages;
 
 }

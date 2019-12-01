@@ -8,7 +8,6 @@ import com.exam.examproject.services.models.RegisterUserServiceModel;
 import com.exam.examproject.services.services.AuthService;
 import com.exam.examproject.services.services.AuthValidationService;
 import com.exam.examproject.services.services.HashingService;
-import com.exam.examproject.web.models.LoginUserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     public AuthServiceImpl(UserRepository userRepository, HashingService hashingService, AuthValidationService authValidationService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
-
         this.hashingService = hashingService;
         this.authValidationService = authValidationService;
         this.modelMapper = modelMapper;
@@ -34,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void register(RegisterUserServiceModel registerUserServiceModel) throws Exception {
+        registerUserServiceModel.setUsername(registerUserServiceModel.getUsername().toLowerCase());
         if (!authValidationService.isValid(registerUserServiceModel)) {
             throw new Exception("Invalid user data");
         }
@@ -44,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponseModel login(LoginUserServiceModel loginUserServiceModel) throws Exception {
+       loginUserServiceModel.setUsername(loginUserServiceModel.getUsername().toLowerCase());
         Optional<User> userOptional = this.userRepository.findByUsernameAndPassword(loginUserServiceModel.getUsername(), this.hashingService.hash(loginUserServiceModel.getPassword()));
         if (userOptional.isEmpty()) {
             throw new Exception("Invalid user");

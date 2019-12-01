@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostServiceModel {
-
+public class EditPostServiceModel {
     private String id;
 
     private String title;

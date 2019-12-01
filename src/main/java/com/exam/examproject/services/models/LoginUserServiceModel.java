@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class LoginUserServiceModel {
+
     private String username;
+
     private String password;
 }
