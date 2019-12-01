@@ -6,7 +6,7 @@
             <small id="messageHelp"
                    th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Error</small>
         </div>
-        <label for="receiver"></label><input type="text"  th:field="*{receiver}" id="receiver" th:value="${receiver}" hidden="hidden">
+        <label for="receiver"></label><input type="text"  th:field="*{receiver}" id="receiver" hidden="hidden">
         <button type="submit" class="btn btn-primary">Send</button>
     </form>
 </th:block>

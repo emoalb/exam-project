@@ -37,15 +37,18 @@ public class MessageController extends BaseController {
 
     @GetMapping("/all")
     public ModelAndView getAllMessages(HttpSession session) {
-        LoginResponseModel loginResponseModel = (LoginResponseModel)session.getAttribute("user");
-        List<MessageServiceModel> messageServiceModels = this.messagesService.getAllMessages(loginResponseModel.getId());
+        LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
+        List<MessageServiceModel> messageServiceModels = null;
+
+            messageServiceModels = this.messagesService.getAllMessages(loginResponseModel.getId());
+
         return super.render("messages/all", "messages", messageServiceModels);
     }
 
     @GetMapping("/new")
     public ModelAndView getCreateNewMessage(@ModelAttribute("createMessageViewModel") CreateMessageViewModel createMessageViewModel, @RequestParam(value = "name", required = true) String name) {
-
-        return super.render("messages/create", "receiver", name);
+        createMessageViewModel.setReceiver(name);
+        return super.render("messages/create");
     }
 
     @PostMapping("/new")

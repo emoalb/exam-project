@@ -52,6 +52,7 @@ private final ModelMapper modelMapper;
 
     @Override
     public List<MessageServiceModel> getAllMessages(String id) {
+
     List<Message> allMessages = this.messageRepository.getAllByReceiveUser_Id(id);
         return allMessages.stream().map(message -> this.modelMapper.map(message, MessageServiceModel.class)).collect(Collectors.toList());
     }
