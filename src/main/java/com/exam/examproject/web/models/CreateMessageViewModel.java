@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 
 public class CreateMessageViewModel {
+
     @NotEmpty(message = "Message cannot be empty field!")
     private String message;
     private String receiver;

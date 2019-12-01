@@ -29,33 +29,44 @@ public class MessageController extends BaseController {
         this.modelMapper = modelMapper;
         this.messagesService = messagesService;
     }
+
     @ModelAttribute("createMessageViewModel")
     public CreateMessageViewModel createMessageViewModel() {
         return new CreateMessageViewModel();
     }
 
     @GetMapping("/all")
-    public ModelAndView getAllMessages() {
-        List<MessageServiceModel> messageServiceModels = this.messagesService.getAllMessages();
-        return super.render("messages/all","messages",messageServiceModels);
+    public ModelAndView getAllMessages(HttpSession session) {
+        LoginResponseModel loginResponseModel = (LoginResponseModel)session.getAttribute("user");
+        List<MessageServiceModel> messageServiceModels = this.messagesService.getAllMessages(loginResponseModel.getId());
+        return super.render("messages/all", "messages", messageServiceModels);
     }
+
     @GetMapping("/new")
     public ModelAndView getCreateNewMessage(@ModelAttribute("createMessageViewModel") CreateMessageViewModel createMessageViewModel, @RequestParam(value = "name", required = true) String name) {
 
-        return super.render("messages/create","receiver",name);
+        return super.render("messages/create", "receiver", name);
     }
+
     @PostMapping("/new")
     public ModelAndView postCreateNewMessage(@Valid @ModelAttribute("createMessageViewModel") CreateMessageViewModel createMessageViewModel, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return super.render("messages/create");
         }
         try {
-            CreateMessageServiceModel createMessageServiceModel = this.modelMapper.map(createMessageViewModel,CreateMessageServiceModel.class);
-            createMessageServiceModel.setSender(((LoginResponseModel)session.getAttribute("user")).getUsername());
+            CreateMessageServiceModel createMessageServiceModel = this.modelMapper.map(createMessageViewModel, CreateMessageServiceModel.class);
+            createMessageServiceModel.setSender(((LoginResponseModel) session.getAttribute("user")).getUsername());
             this.messagesService.sendMessage(createMessageServiceModel);
         } catch (Exception e) {
-            return super.renderWithError("message/create","Error sending message!");
+            return super.renderWithError("message/create", "Error sending message!");
         }
         return super.redirect("/");
+    }
+
+    @GetMapping("/delete")
+    public ModelAndView getDeleteMessage(@RequestParam(value = "id", required = true) String id) {
+        this.messagesService.deleteMessage(id);
+        return super.redirect("/messages/all");
+
     }
 }
