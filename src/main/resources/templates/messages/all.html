@@ -1,10 +1,14 @@
 <th:block th:fragment>
-    <th:block th:if="${messages!=null}">
+
+    <th:block th:if="${!messages.empty}">
     <th:block th:each="message : ${messages}">
         <div class="card" style="width: 18rem;">
                 <h5 class="card-title">Message: [[${message.message}]]</h5>
                 <p class="card-text">From [[${message.sendUserUsername}]]</p>
             </div>
     </th:block>
+    </th:block>
+    <th:block th:unless="${!messages.empty}">
+         <p>You do not have any messages yet!</p>
     </th:block>
 </th:block>
