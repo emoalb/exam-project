@@ -15,22 +15,28 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-    @Column(name = "username",unique = true, nullable =  false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
-    @Column(name = "password",nullable = false)
+
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "email",unique = true,nullable = false)
+
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
-    @Enumerated(EnumType.STRING
-    )
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role = UserRole.USER;
 
-    @OneToMany(targetEntity = Post.class,mappedBy = "creator",fetch = FetchType.LAZY,cascade = CascadeType.ALL )
+    @OneToMany(targetEntity = Post.class, mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
-    @OneToMany(targetEntity = Message.class,mappedBy = "sendUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL )
+
+    @OneToMany(targetEntity = Message.class, mappedBy = "sendUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Message> sentMessages;
-    @OneToMany(targetEntity = Message.class,mappedBy = "receiveUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL )
+
+    @OneToMany(targetEntity = Message.class, mappedBy = "receiveUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Message> receivedMessages;
 
+    @OneToMany(targetEntity = Comment.class, mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comment> comments;
 }

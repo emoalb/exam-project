@@ -1,20 +1,5 @@
-<th:block th:fragment>
-    <th:block th:each="post : ${posts}">
-        <div class="card" style="width: 18rem;">
-            <img th:src="${post.pictureUrl}" class="card-img-top" alt="Image for ">
-            <div class="card-body">
-                <h5 class="card-title">[[${#strings.capitalize(post.title)}]]</h5>
-                <p class="card-text">[[${post.description}]]</p>
-                <p class="card-text">Creator: [[${post.creatorUsername}]]
-                    <th:block th:if="${session.user.username!=post.creatorUsername}"><a
-                            th:href="@{/messages/new(name=${post.creatorUsername})}" class="btn btn-primary">Send message</a>
-                    </th:block>
-                </p>
-                <th:block th:if="${session.user.username == post.creatorUsername}">
-                    <a th:href="@{/posts/edit(id=${post.id})}" class="btn btn-primary">Edit</a>
-                    <a th:href="@{/posts/delete(id=${post.id})}" class="btn btn-primary">Delete</a>
-                </th:block>
-            </div>
-        </div>
+<th:block th:fragment xmlns:th="http://www.thymeleaf.org">
+    <th:block th:each="post,iter : ${posts}">
+        <th:block th:include="~{_fragments/single-post}"/>
     </th:block>
 </th:block>
