@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<th:block th:fragment>
+    <form th:action="@{/messages/new}" th:object="${createCommentViewModel}" th:method="post">
+        <div class="form-group"  th:classappend="${#fields.hasErrors('message')}? 'has-danger'">
+            <label for="message">Message</label>
+            <input type="text" class="form-control" th:field="*{comment}" id="comment" placeholder="Type comment....">
+            <small id="messageHelp"
+                   th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Error</small>
+        </div>
+        <label for="receiver"></label><input type="text"  th:field="*{receiver}" id="receiver" hidden="hidden">
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</th:block>

@@ -1,5 +1,9 @@
 <th:block th:fragment xmlns:th="http://www.thymeleaf.org">
     <th:block th:each="post,iter : ${posts}">
+        <div class="card" style="width: 18rem;">
         <th:block th:include="~{_fragments/single-post}"/>
+        <a class="btn btn-primary" th:href="@{/posts/details(id=${post.id})}">Details</a>
+        </div>
     </th:block>
+
 </th:block>

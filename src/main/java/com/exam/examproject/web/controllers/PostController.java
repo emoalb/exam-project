@@ -73,6 +73,17 @@ public class PostController extends BaseController {
         }
     }
 
+    @GetMapping("/details")
+    public ModelAndView getDetailsPost(@RequestParam(value = "id", required = true) String id) {
+        try {
+            EditPostServiceModel editPostServiceModel = this.postService.findPostById(id);
+            return super.render("posts/details", "post", editPostServiceModel);
+        } catch (Exception e) {
+            return super.renderWithError("home", e.getMessage());
+
+        }
+    }
+
     @GetMapping("/delete")
     public ModelAndView getDeletePost(@RequestParam(value = "id", required = true) String id) {
         System.out.println(id);
