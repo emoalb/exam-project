@@ -5,6 +5,7 @@ import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.repositories.PostRepository;
 import com.exam.examproject.repositories.UserRepository;
 import com.exam.examproject.services.models.CreatePostServiceModel;
+import com.exam.examproject.services.models.DetailsPostServiceModel;
 import com.exam.examproject.services.models.EditPostServiceModel;
 import com.exam.examproject.services.models.PostServiceModel;
 import com.exam.examproject.services.services.PostsService;
@@ -54,21 +55,33 @@ public class PostsServiceImpl implements PostsService {
     public void updatePost(EditPostServiceModel editPostServiceModel) throws Exception {
         Post post = this.modelMapper.map(editPostServiceModel, Post.class);
         Optional<User> user = this.userRepository.findByUsername(editPostServiceModel.getCreatorUsername());
-       if(user.isEmpty()){
-           throw new Exception("Creator not valid");
-       }
-       post.setCreator(user.get());
-       this.postRepository.save(post);
+        if (user.isEmpty()) {
+            throw new Exception("Creator not valid");
+        }
+        post.setCreator(user.get());
+        this.postRepository.save(post);
     }
 
     @Override
-    public EditPostServiceModel findPostById(String id) throws Exception {
+    public EditPostServiceModel findPostToEdit(String id) throws Exception {
+
+        return this.modelMapper.map(findPostById(id), EditPostServiceModel.class);
+    }
+
+    @Override
+    public DetailsPostServiceModel findPostDetails(String id) throws Exception {
+
+        return this.modelMapper.map(findPostById(id), DetailsPostServiceModel.class);
+    }
+
+    private Post findPostById(String id) throws Exception {
 
         Optional<Post> post = this.postRepository.findById(id);
         if (post.isEmpty()) {
             throw new Exception("Invalid post id");
         }
-        return this.modelMapper.map(post.get(), EditPostServiceModel.class);
+
+        return post.get();
     }
 
     @Override

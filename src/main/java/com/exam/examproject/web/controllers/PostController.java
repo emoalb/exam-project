@@ -1,6 +1,7 @@
 package com.exam.examproject.web.controllers;
 
 import com.exam.examproject.services.models.CreatePostServiceModel;
+import com.exam.examproject.services.models.DetailsPostServiceModel;
 import com.exam.examproject.services.models.EditPostServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.web.models.EditPostViewModel;
@@ -65,7 +66,7 @@ public class PostController extends BaseController {
     @GetMapping("/edit")
     public ModelAndView getEditPost(@RequestParam(value = "id", required = true) String id) {
         try {
-            EditPostServiceModel editPostServiceModel = this.postService.findPostById(id);
+            EditPostServiceModel editPostServiceModel = this.postService.findPostToEdit(id);
             return super.render("posts/edit", "post", editPostServiceModel);
         } catch (Exception e) {
             return super.renderWithError("home", e.getMessage());
@@ -73,11 +74,25 @@ public class PostController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ModelAndView putEditPost(@RequestBody String jsonResponse, HttpSession session) {
+        System.out.println(jsonResponse);
+        EditPostViewModel editViewModel = this.gson.fromJson(jsonResponse, EditPostViewModel.class);
+        EditPostServiceModel editPostServiceModel = this.modelMapper.map(editViewModel, EditPostServiceModel.class);
+        try {
+            this.postService.updatePost(editPostServiceModel);
+        } catch (Exception e) {
+
+            return super.renderWithError("posts/edit", e.getMessage());
+        }
+        return super.redirect("/");
+    }
+
     @GetMapping("/details")
     public ModelAndView getDetailsPost(@RequestParam(value = "id", required = true) String id) {
         try {
-            EditPostServiceModel editPostServiceModel = this.postService.findPostById(id);
-            return super.render("posts/details", "post", editPostServiceModel);
+            DetailsPostServiceModel detailsPostServiceModel = this.postService.findPostDetails(id);
+            return super.render("posts/details", "post", detailsPostServiceModel);
         } catch (Exception e) {
             return super.renderWithError("home", e.getMessage());
 
@@ -96,19 +111,5 @@ public class PostController extends BaseController {
         return super.redirect("/");
     }
 
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ModelAndView putEditPost(@RequestBody String jsonResponse, HttpSession session) {
-        System.out.println(jsonResponse);
-        EditPostViewModel editViewModel = this.gson.fromJson(jsonResponse, EditPostViewModel.class);
-        EditPostServiceModel editPostServiceModel = this.modelMapper.map(editViewModel, EditPostServiceModel.class);
-        try {
-            this.postService.updatePost(editPostServiceModel);
-        } catch (Exception e) {
-
-            return super.renderWithError("posts/edit", e.getMessage());
-        }
-        return super.redirect("/");
-    }
 
 }

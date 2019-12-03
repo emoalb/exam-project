@@ -1,21 +1,16 @@
 <th:block th:fragment>
     <div class="card" style="width: 18rem;">
         <th:block th:include="~{_fragments/single-post}"/>
-        <div class="row" style="margin: 0.5rem">
-            <div class="col">
-                <a th:href="@{/comments/new(id=${post.id})}" class="btn btn-primary">Add comment</a>
-            </div>
-            <div class="col">
-                <a th:href="@{/comments/all(id=${post.id})}" class="btn btn-primary">All comments</a>
+        <div class="d-flex justify-content-between align-items-center" >
+            <div class="btn-group">
+                <a th:href="@{/comments/all(id=${post.id})}" class="btn btn-sm btn-outline-success">Comments</a>
             </div>
         </div>
         <th:block th:if="${session.user.username == post.creatorUsername}">
-            <div class="row" style="margin: 0.5rem">
-                <div class="col">
-                    <a th:href="@{/posts/edit(id=${post.id})}" class="btn btn-primary">Edit</a>
-                </div>
-                <div class="col">
-                    <a th:href="@{/posts/delete(id=${post.id})}" class="btn btn-primary">Delete</a>
+            <div class="d-flex justify-content-between align-items-center" >
+                <div class="btn-group">
+                    <a th:href="@{/posts/edit(id=${post.id})}" class="btn btn-sm btn-outline-warning">Edit</a>
+                    <a th:href="@{/posts/delete(id=${post.id})}" class="btn btn-sm btn-outline-danger">Delete</a>
                 </div>
             </div>
         </th:block>

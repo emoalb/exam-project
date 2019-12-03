@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "comments")
@@ -12,17 +13,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 
-public class Comment  extends  BaseEntity{
+public class Comment extends BaseEntity {
 
-    @Column(name = "comment",nullable = false)
+    @Column(name = "comment", nullable = false)
     private String comment;
-
     @ManyToOne(targetEntity = Post.class)
-    @JoinColumn(name="post_id",referencedColumnName = "id",nullable=false)
+    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
     private Post post;
-
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="creator_id",referencedColumnName = "id",nullable=false)
+    @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = false)
     private User creator;
 
 }

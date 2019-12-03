@@ -8,8 +8,8 @@ import java.util.List;
 
 
 public interface MessagesService {
+
     void sendMessage(CreateMessageServiceModel createMessageServiceModel) throws Exception;
     List<MessageServiceModel>  getAllMessages(String username);
-
     void deleteMessage(String id);
 }

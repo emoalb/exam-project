@@ -57,9 +57,9 @@ public class MessageController extends BaseController {
             return super.render("messages/create");
         }
         try {
-            CreateMessageServiceModel createMessageServiceModel = this.modelMapper.map(createMessageViewModel, CreateMessageServiceModel.class);
-            createMessageServiceModel.setSender(((LoginResponseModel) session.getAttribute("user")).getUsername());
-            this.messagesService.sendMessage(createMessageServiceModel);
+                CreateMessageServiceModel createMessageServiceModel = this.modelMapper.map(createMessageViewModel, CreateMessageServiceModel.class);
+                createMessageServiceModel.setSender(((LoginResponseModel) session.getAttribute("user")).getUsername());
+                this.messagesService.sendMessage(createMessageServiceModel);
         } catch (Exception e) {
             return super.renderWithError("message/create", "Error sending message!");
         }
