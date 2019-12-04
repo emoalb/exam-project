@@ -3,13 +3,12 @@
 <th:block th:include="~{_shared/head}"/>
 <body>
 <th:block th:include="~{_shared/header}"/>
-<div class="container">
-    <th:block th:include="${view}"></th:block>
-    <th:block th:if="${message!=null}">
-        <div class="alert alert-danger" role="alert">
-            [[${message}]]
-        </div>
-    </th:block>
-</div>
+<th:block th:include="${view}"></th:block>
+<th:block th:if="${message!=null}">
+    <div class="alert alert-danger" role="alert">
+        [[${message}]]
+    </div>
+</th:block>
+
 </body>
 </html>

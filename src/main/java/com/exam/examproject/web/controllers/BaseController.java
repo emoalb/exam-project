@@ -10,7 +10,8 @@ public abstract class BaseController {
         modelAndView.addObject("view", viewName);
         return modelAndView;
     }
-    public ModelAndView renderWithError(String viewName, String message){
+
+    public ModelAndView renderWithError(String viewName, String message) {
         ModelAndView modelAndView = new ModelAndView("_layouts/index");
         modelAndView.addObject("view", viewName);
         modelAndView.addObject("message", message);
@@ -23,6 +24,16 @@ public abstract class BaseController {
         modelAndView.addObject("view", viewName);
         return modelAndView;
     }
+
+    public ModelAndView render(String viewName, String[] attrNames, Object[] objects) {
+        ModelAndView modelAndView = new ModelAndView("_layouts/index");
+        for (int i = 0; i < attrNames.length; i++) {
+            modelAndView.addObject(attrNames[i], objects[i]);
+        }
+        modelAndView.addObject("view", viewName);
+        return modelAndView;
+    }
+
     public ModelAndView redirect(String url) {
         ModelAndView modelAndView = new ModelAndView();
 

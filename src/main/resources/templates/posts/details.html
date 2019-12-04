@@ -3,7 +3,7 @@
         <th:block th:include="~{_fragments/single-post}"/>
         <div class="d-flex justify-content-between align-items-center" >
             <div class="btn-group">
-                <a th:href="@{/comments/all(id=${post.id})}" class="btn btn-sm btn-outline-success">Comments</a>
+                <a th:href="@{/comments/all/{id}(id=${post.id})}" class="btn btn-sm btn-outline-success">Comments</a>
             </div>
         </div>
         <th:block th:if="${session.user.username == post.creatorUsername}">

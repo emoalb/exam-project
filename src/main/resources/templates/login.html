@@ -1,16 +1,22 @@
 <th:block th:fragment>
-    <h2>Login</h2>
-    <br/>
-    <form th:action="@{/users/login}" th:method="post">
-        <div class="form-group">
-            <label for="user-name-login">User name</label>
-            <input type="text" class="form-control" name="username" id="user-name-login" placeholder="Enter Username">
-        </div>
-        <div class="form-group">
-            <label for="password-login">Password</label>
-            <input type="password" class="form-control" name="password" id="password-login" placeholder="Password">
-        </div>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Login</h2>
+            <br/>
+            <form th:action="@{/users/login}" th:method="post">
+                <div class="form-group">
+                    <label for="user-name-login">User name</label>
+                    <input type="text" class="form-control" name="username" id="user-name-login"
+                           placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                    <label for="password-login">Password</label>
+                    <input type="password" class="form-control" name="password" id="password-login"
+                           placeholder="Password">
+                </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
 </th:block>

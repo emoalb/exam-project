@@ -1,7 +1,5 @@
 <th:block th:fragment>
-    <div class="row">
-        <div class="col">
-            <h3>Welcome [[${#strings.capitalize(session.user.username)}]]!</h3>
+        <div class="container text-center">
+            <h3 class="jumbotron-heading">Welcome [[${#strings.capitalize(session.user.username)}]]!</h3>
         </div>
-    </div>
 </th:block>

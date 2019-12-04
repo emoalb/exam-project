@@ -8,7 +8,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CreateCommentServiceModel {
-public String comment;
-public String postId;
+    private String comment;
+    private String postId;
+    private String creatorId;
 
 }

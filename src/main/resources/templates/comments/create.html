@@ -1,11 +1,14 @@
-<th:block th:fragment>
-    <form th:action="@{/comments/create}" th:object="${createCommentViewModel}" th:method="post">
-        <div class="form-group"  th:classappend="${#fields.hasErrors('comment')}? 'has-danger'">
-            <label for="comment">Comment</label>
-            <input type="text" class="form-control" th:field="*{comment}" id="comment" placeholder="Type comment....">
-            <small id="messageHelp"
-                   th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Error</small>
-        </div>
+<form th:action="@{/comments/all/{id}(id=${postId})}" th:object="${createCommentViewModel}" th:method="post">
+    <div class="form-group" th:classappend="${#fields.hasErrors('comment')}? 'has-danger'">
+        <label for="comment">Comment</label>
+        <input type="text" class="form-control" th:field="*{comment}" id="comment" placeholder="Type comment....">
+        <small id="messageHelp"
+               th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Error
+        </small>
+    </div>
+
         <button type="submit" class="btn btn-primary">Send</button>
-    </form>
+        <a class="btn btn-outline-primary" th:href="@{/posts/details?(id=${postId})}">Back</a>
+
+</form>
 </th:block>

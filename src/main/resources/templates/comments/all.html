@@ -16,8 +16,8 @@
                 <tr>
                     <th scope="row"><i style="margin-right: 0.5rem;" class="far fa-envelope"></i></th>
                     <td>[[${comment.comment}]]</td>
-                    <td>[[${comment.userName}}]]</td>
-                 <!--   <td>[[${comment.date}]]</td> -->
+                    <td>[[${comment.creatorUsername}]]</td>
+
                 </tr>
             </th:block>
             </tbody>
@@ -26,5 +26,8 @@
     <th:block th:unless="${!allComments.empty}">
         <p>No comments yet!</p>
     </th:block>
-    <th:block th:include="~{comments/create}"/>
+    <th:block th:fragment>
+
+ <th:block th:include="~{comments/create}"/>
+</th:block>
 </th:block>

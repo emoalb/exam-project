@@ -2,10 +2,10 @@ package com.exam.examproject.web.controllers;
 
 import com.exam.examproject.services.models.CommentServiceModel;
 import com.exam.examproject.services.models.CreateCommentServiceModel;
-import com.exam.examproject.services.models.CreateMessageServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.services.services.CommentsService;
 import com.exam.examproject.web.models.CreateCommentViewModel;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,34 +20,47 @@ import java.util.List;
 @RequestMapping("/comments")
 public class CommentController extends BaseController {
     private final CommentsService commentsService;
+    private final ModelMapper modelMapper;
 
     @ModelAttribute("createCommentViewModel")
-    public CreateCommentViewModel createCommentViewModel(){
+    public CreateCommentViewModel createCommentViewModel() {
         return new CreateCommentViewModel();
     }
-@Autowired
-public CommentController(CommentsService commentsService, CommentsService commentsService1){
 
-    this.commentsService = commentsService1;
-}
-    @GetMapping("/all")
-    public ModelAndView getAllComments(@ModelAttribute("createCommentViewModel")CreateCommentViewModel createCommentViewModel, @RequestParam(value = "id", required = true) String id) {
-//        LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
-//        List<MessageServiceModel> messageServiceModels = null;
-//
-//        messageServiceModels = this.messagesService.getAllMessages(loginResponseModel.getId());
+    @Autowired
+    public CommentController(CommentsService commentsService, CommentsService commentsService1, ModelMapper modelMapper) {
 
-        List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
-
-        return super.render("comments/all","allComments",commentServiceModels );
+        this.commentsService = commentsService1;
+        this.modelMapper = modelMapper;
     }
-    @PostMapping("/create")
-    public ModelAndView postComment(@Valid @ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, BindingResult bindingResult){
+
+    @GetMapping("/all/{id}")
+    public ModelAndView getAllComments(@ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, @PathVariable("id") String id) {
+        List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
+        String[] attrNames = {"allComments","postId"};
+        Object[] objects = {commentServiceModels, id};
+        return super.render("comments/all", attrNames,objects);
+    }
+
+    @PostMapping("/all/{id}")
+    public ModelAndView postComment(@Valid @ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, BindingResult bindingResult,
+                                    @PathVariable("id") String id, HttpSession session) {
 
         if (bindingResult.hasErrors()) {
-            return super.redirect("comments/all");
+            List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
+            String[] attrNames = {"allComments","postId"};
+            Object[] objects = {commentServiceModels, id};
+            return super.render("comments/all", attrNames,objects);
         }
-
-      return super.redirect("/all") ;
+        CreateCommentServiceModel createCommentServiceModel = this.modelMapper.map(createCommentViewModel, CreateCommentServiceModel.class);
+        LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
+        createCommentServiceModel.setCreatorId(loginResponseModel.getId());
+        createCommentServiceModel.setPostId(id);
+        try {
+            this.commentsService.createComment(createCommentServiceModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return super.redirect("/comments/all/" + id);
     }
 }

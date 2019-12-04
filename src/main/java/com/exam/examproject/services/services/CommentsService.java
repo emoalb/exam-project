@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CommentsService {
     List<CommentServiceModel> getAllComments(String postId);
-    void createComment(CreateCommentServiceModel createCommentServiceModel);
+    void createComment(CreateCommentServiceModel createCommentServiceModel) throws Exception;
 }
