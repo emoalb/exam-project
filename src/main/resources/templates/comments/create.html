@@ -1,14 +1,22 @@
-<form th:action="@{/comments/all/{id}(id=${postId})}" th:object="${createCommentViewModel}" th:method="post">
-    <div class="form-group" th:classappend="${#fields.hasErrors('comment')}? 'has-danger'">
-        <label for="comment">Comment</label>
-        <input type="text" class="form-control" th:field="*{comment}" id="comment" placeholder="Type comment....">
-        <small id="messageHelp"
-               th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Error
-        </small>
+<th:block th:fragment>
+    <div class="container">
+        <div class="py-5 text-center">
+            <form th:action="@{/comments/all/{id}(id=${postId})}" th:object="${createCommentViewModel}"
+                  th:method="post">
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <input type="text" class="form-control"
+                           th:classappend="${#fields.hasErrors('comment')}? 'is-invalid'" th:field="*{comment}"
+                           id="comment" placeholder="Type comment....">
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Error
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send</button>
+                <a class="btn btn-outline-primary" th:href="@{/posts/details?(id=${postId})}">Back</a>
+
+            </form>
+        </div>
     </div>
-
-        <button type="submit" class="btn btn-primary">Send</button>
-        <a class="btn btn-outline-primary" th:href="@{/posts/details?(id=${postId})}">Back</a>
-
-</form>
 </th:block>

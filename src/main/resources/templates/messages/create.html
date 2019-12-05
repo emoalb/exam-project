@@ -1,12 +1,21 @@
 <th:block th:fragment>
-    <form th:action="@{/messages/new}" th:object="${createMessageViewModel}" th:method="post">
-        <div class="form-group"  th:classappend="${#fields.hasErrors('message')}? 'has-danger'">
-            <label for="message">Message</label>
-            <input type="text" class="form-control" th:field="*{message}" id="message" placeholder="Type message....">
-            <small id="messageHelp"
-                   th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Error</small>
+    <div class="container">
+        <div class="py-5 text-center">
+            <form th:action="@{/messages/new}" th:object="${createMessageViewModel}" th:method="post">
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <input type="text" class="form-control"
+                           th:classappend="${#fields.hasErrors('message')}? 'is-invalid'" th:field="*{message}"
+                           id="message" placeholder="Type message....">
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Error
+                    </div>
+                </div>
+                    <label for="receiver"></label><input type="text" th:field="*{receiver}" id="receiver"
+                                                         hidden="hidden">
+                    <button type="submit" class="btn btn-primary">Send</button>
+
+            </form>
         </div>
-        <label for="receiver"></label><input type="text"  th:field="*{receiver}" id="receiver" hidden="hidden">
-        <button type="submit" class="btn btn-primary">Send</button>
-    </form>
+    </div>
 </th:block>

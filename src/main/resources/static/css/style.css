@@ -5,9 +5,3 @@
     opacity: 0;
     transition: visibility 2s 3s, opacity 5s linear;
 }
-.has-danger {
-    border: red 1px solid;
-    border-radius: 2px;
-
-    color: red;
-}

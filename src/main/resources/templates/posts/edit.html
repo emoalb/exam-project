@@ -1,4 +1,6 @@
 <th:block th:fragment>
+    <div class="container">
+        <div class="py-5 text-center">
     <h2>Edit post</h2>
     <br/>
     <form>
@@ -6,21 +8,27 @@
             <input hidden="hidden" disabled="disabled" id="post-id-edit" type="text" th:value="${post.id}">
         </label>
         <label>
-            <input hidden="hidden" disabled="disabled" id="post-creator-edit" type="text" th:value="${post.creatorUsername}">
+            <input hidden="hidden" disabled="disabled" id="post-creator-edit" type="text"
+                   th:value="${post.creatorUsername}">
         </label>
         <div class="form-group">
             <label for="post-title-edit">Title</label>
-            <input type="text" class="form-control" th:value="${post.title}"  id="post-title-edit" placeholder="Title of post">
+            <input type="text" class="form-control" th:value="${post.title}" id="post-title-edit"
+                   placeholder="Title of post">
         </div>
         <div class="form-group">
             <label for="post-url-edit">Attach image for post</label>
-            <input type="text" class="form-control" th:value="${post.pictureUrl}" id="post-url-edit" placeholder="URL for image">
+            <input type="text" class="form-control" th:value="${post.pictureUrl}" id="post-url-edit"
+                   placeholder="URL for image">
         </div>
         <div class="form-group">
             <label for="post-description-edit">Post description</label>
-            <input type="text" class="form-control" th:value="${post.description}"  id="post-description-edit" placeholder="Post description">
+            <input type="text" class="form-control" th:value="${post.description}" id="post-description-edit"
+                   placeholder="Post description">
         </div>
 
         <button type="submit" id="button-edit" class="btn btn-primary">Edit post</button>
     </form>
+            <div class="container">
+                <div class="py-5 text-center">
 </th:block>

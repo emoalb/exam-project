@@ -1,25 +1,36 @@
 <th:block th:fragment>
-    <h2>Create new post</h2>
-    <br/>
-    <form th:action="@{/posts/new}" th:object="${createPostModel}" th:method="post">
-        <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
-            <label for="post-title">Title</label>
-            <input type="text" class="form-control" th:field="*{title}"  id="post-title" placeholder="Title of post">
-            <small id="titleHelp"
-                  th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</small>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Create new post</h2>
+            <br/>
+            <form th:action="@{/posts/new}" th:object="${createPostModel}" th:method="post">
+                <div class="form-group">
+                    <label for="post-title">Title</label>
+                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('title')}? 'is-invalid'"
+                           th:field="*{title}" id="post-title" placeholder="Title of post">
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="post-url">Attach image for post</label>
+                    <input type="text" th:classappend="${#fields.hasErrors('pictureUrl')}? 'is-invalid'"
+                           class="form-control" th:field="*{pictureUrl}" id="post-url" placeholder="URL for image">
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('pictureUrl')}" th:errors="*{pictureUrl}">Error
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="post-description">Post description</label>
+                    <input type="text" class="form-control"
+                           th:classappend="${#fields.hasErrors('description')}? 'is-invalid'" th:field="*{description}"
+                           id="post-description" placeholder="Post description">
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create new post</button>
+            </form>
         </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('pictureUrl')}? 'has-danger'">
-            <label for="post-url">Attach image for post</label>
-            <input type="text" class="form-control" th:field="*{pictureUrl}" id="post-url" placeholder="URL for image">
-            <small id="pictureUrlHelp"
-                   th:if="${#fields.hasErrors('pictureUrl')}" th:errors="*{pictureUrl}">Error</small>
-        </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-danger'">
-            <label for="post-description">Post description</label>
-            <input type="text" class="form-control" th:field="*{description}" id="post-description" placeholder="Post description">
-            <small id="descriptionHelp"
-                   th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</small>
-        </div>
-        <button type="submit" class="btn btn-primary">Create new post</button>
-    </form>
+    </div>
 </th:block>
