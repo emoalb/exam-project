@@ -1,5 +1,7 @@
 package com.exam.examproject.web.controllers;
 
+import com.exam.examproject.errors.PostNotFoundException;
+import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.services.models.CommentServiceModel;
 import com.exam.examproject.services.models.CreateCommentServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
@@ -37,30 +39,26 @@ public class CommentController extends BaseController {
     @GetMapping("/all/{id}")
     public ModelAndView getAllComments(@ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, @PathVariable("id") String id) {
         List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
-        String[] attrNames = {"allComments","postId"};
+        String[] attrNames = {"allComments", "postId"};
         Object[] objects = {commentServiceModels, id};
-        return super.render("comments/all", attrNames,objects);
+        return super.render("comments/all", attrNames, objects);
     }
 
     @PostMapping("/all/{id}")
     public ModelAndView postComment(@Valid @ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, BindingResult bindingResult,
                                     @PathVariable("id") String id, HttpSession session) {
-
+        if(session.getAttribute("user")==null)throw new UserNotFoundException("Invalid user!");
         if (bindingResult.hasErrors()) {
             List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
-            String[] attrNames = {"allComments","postId"};
+            String[] attrNames = {"allComments", "postId"};
             Object[] objects = {commentServiceModels, id};
-            return super.render("comments/all", attrNames,objects);
+            return super.render("comments/all", attrNames, objects);
         }
         CreateCommentServiceModel createCommentServiceModel = this.modelMapper.map(createCommentViewModel, CreateCommentServiceModel.class);
         LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
         createCommentServiceModel.setCreatorId(loginResponseModel.getId());
         createCommentServiceModel.setPostId(id);
-        try {
-            this.commentsService.createComment(createCommentServiceModel);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.commentsService.createComment(createCommentServiceModel);
         return super.redirect("/comments/all/" + id);
     }
 }

@@ -52,7 +52,7 @@ public class AuthController extends BaseController {
         try {
             this.authService.register(registerUserServiceModel);
         } catch (Exception e) {
-            return super.renderWithError("register", e.getMessage());
+            return super.renderError(e.getMessage());
         }
 
         return super.redirect("/users/login");
@@ -65,7 +65,7 @@ public class AuthController extends BaseController {
             LoginResponseModel loginResponseModel = this.authService.login(loginUserServiceModel);
             session.setAttribute("user", loginResponseModel);
         } catch (Exception e) {
-            return super.renderWithError("login", e.getMessage());
+            return super.renderError(e.getMessage());
         }
         return super.redirect("/");
     }

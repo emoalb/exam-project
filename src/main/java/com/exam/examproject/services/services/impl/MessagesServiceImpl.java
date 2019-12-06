@@ -2,6 +2,7 @@ package com.exam.examproject.services.services.impl;
 
 import com.exam.examproject.domain.entities.Message;
 import com.exam.examproject.domain.entities.User;
+import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.MessageRepository;
 import com.exam.examproject.repositories.UserRepository;
 import com.exam.examproject.services.models.CreateMessageServiceModel;
@@ -29,18 +30,15 @@ private final ModelMapper modelMapper;
     }
 
     @Override
-    public void sendMessage(CreateMessageServiceModel createMessageServiceModel) throws Exception {
-        if(createMessageServiceModel.getMessage().length()==0){
-            throw new Exception("Message is empty!");
-        }
+    public void sendMessage(CreateMessageServiceModel createMessageServiceModel) throws UserNotFoundException {
        Optional<User> sender = this.userRepository.findByUsername(createMessageServiceModel.getSender());
         if(sender.isEmpty()){
-            throw new Exception("Invalid user sender");
+            throw new UserNotFoundException("Invalid user!");
 
         }
         Optional<User> receiver = this.userRepository.findByUsername(createMessageServiceModel.getReceiver());
         if(receiver.isEmpty()){
-            throw new Exception("Invalid user sender");
+            throw new UserNotFoundException("Invalid user!");
 
         }
         Message message = new Message();

@@ -3,6 +3,8 @@ package com.exam.examproject.services.services.impl;
 import com.exam.examproject.domain.entities.Comment;
 import com.exam.examproject.domain.entities.Post;
 import com.exam.examproject.domain.entities.User;
+import com.exam.examproject.errors.PostNotFoundException;
+import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.CommentRepository;
 import com.exam.examproject.repositories.PostRepository;
 import com.exam.examproject.repositories.UserRepository;
@@ -34,23 +36,26 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<CommentServiceModel> getAllComments(String postId) {
+    public List<CommentServiceModel> getAllComments(String postId) throws PostNotFoundException {
+        Optional<Post> post = this.postRepository.findById(postId);
+
+        if (post.isEmpty()) throw new PostNotFoundException("Post non existent!");
         List<Comment> allComments = this.commentRepository.findAllByPost_Id(postId);
         return allComments.stream().map(comment -> this.modelMapper.map(comment, CommentServiceModel.class)).collect(Collectors.toList());
 
     }
 
     @Override
-    public void createComment(CreateCommentServiceModel createCommentServiceModel) throws Exception {
+    public void createComment(CreateCommentServiceModel createCommentServiceModel) throws PostNotFoundException, UserNotFoundException {
         Comment comment = new Comment();
         comment.setComment(createCommentServiceModel.getComment());
         Optional<Post> post = this.postRepository.findById(createCommentServiceModel.getPostId());
-        if (post.isEmpty()) throw new Exception("Invalid post id");
+        if (post.isEmpty()) throw new PostNotFoundException("Post non existent!");
         comment.setPost(post.get());
         Optional<User> user = this.userRepository.findById(createCommentServiceModel.getCreatorId());
-        if(user.isEmpty()) throw new Exception("Invalid user id");
+        if (user.isEmpty()) throw new UserNotFoundException("Invalid user!");
         comment.setCreator(user.get());
         this.commentRepository.save(comment);
-        System.out.println();
+
     }
 }

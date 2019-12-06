@@ -1,6 +1,7 @@
 package com.exam.examproject.web.controllers;
 
 
+import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.services.models.CreateMessageServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.services.models.MessageServiceModel;
@@ -37,10 +38,9 @@ public class MessageController extends BaseController {
 
     @GetMapping("/all")
     public ModelAndView getAllMessages(HttpSession session) {
+        if(session.getAttribute("user")==null)throw new UserNotFoundException("Invalid user!");
         LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
-        List<MessageServiceModel> messageServiceModels = null;
-
-            messageServiceModels = this.messagesService.getAllMessages(loginResponseModel.getId());
+        List<MessageServiceModel> messageServiceModels =  this.messagesService.getAllMessages(loginResponseModel.getId());
 
         return super.render("messages/all", "messages", messageServiceModels);
     }
@@ -56,13 +56,11 @@ public class MessageController extends BaseController {
         if (bindingResult.hasErrors()) {
             return super.render("messages/create");
         }
-        try {
-                CreateMessageServiceModel createMessageServiceModel = this.modelMapper.map(createMessageViewModel, CreateMessageServiceModel.class);
-                createMessageServiceModel.setSender(((LoginResponseModel) session.getAttribute("user")).getUsername());
-                this.messagesService.sendMessage(createMessageServiceModel);
-        } catch (Exception e) {
-            return super.renderWithError("message/create", "Error sending message!");
-        }
+        CreateMessageServiceModel createMessageServiceModel = this.modelMapper.map(createMessageViewModel, CreateMessageServiceModel.class);
+        if(session.getAttribute("user")==null)throw new UserNotFoundException("Invalid user!");
+        createMessageServiceModel.setSender(((LoginResponseModel) session.getAttribute("user")).getUsername());
+        this.messagesService.sendMessage(createMessageServiceModel);
+
         return super.redirect("/");
     }
 

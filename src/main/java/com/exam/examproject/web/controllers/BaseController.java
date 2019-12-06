@@ -1,6 +1,7 @@
 package com.exam.examproject.web.controllers;
 
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 public abstract class BaseController {
@@ -11,12 +12,6 @@ public abstract class BaseController {
         return modelAndView;
     }
 
-    public ModelAndView renderWithError(String viewName, String message) {
-        ModelAndView modelAndView = new ModelAndView("_layouts/index");
-        modelAndView.addObject("view", viewName);
-        modelAndView.addObject("message", message);
-        return modelAndView;
-    }
 
     public ModelAndView render(String viewName, String attrName, Object object) {
         ModelAndView modelAndView = new ModelAndView("_layouts/index");
@@ -31,6 +26,14 @@ public abstract class BaseController {
             modelAndView.addObject(attrNames[i], objects[i]);
         }
         modelAndView.addObject("view", viewName);
+        return modelAndView;
+    }
+
+    public ModelAndView renderError(String message) {
+        ModelAndView modelAndView = new ModelAndView("_layouts/index");
+        modelAndView.addObject("view", "errors/error");
+        modelAndView.addObject("errorMessage", message);
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
         return modelAndView;
     }
 
