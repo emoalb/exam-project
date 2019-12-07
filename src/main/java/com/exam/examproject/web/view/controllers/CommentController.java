@@ -1,12 +1,12 @@
-package com.exam.examproject.web.controllers;
+package com.exam.examproject.web.view.controllers;
 
-import com.exam.examproject.errors.PostNotFoundException;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.services.models.CommentServiceModel;
 import com.exam.examproject.services.models.CreateCommentServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.services.services.CommentsService;
-import com.exam.examproject.web.models.CreateCommentViewModel;
+import com.exam.examproject.web.base.BaseController;
+import com.exam.examproject.web.view.models.CreateCommentViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

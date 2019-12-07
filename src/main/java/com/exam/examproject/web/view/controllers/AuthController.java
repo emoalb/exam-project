@@ -1,12 +1,13 @@
-package com.exam.examproject.web.controllers;
+package com.exam.examproject.web.view.controllers;
 
 
 import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.services.models.LoginUserServiceModel;
 import com.exam.examproject.services.models.RegisterUserServiceModel;
 import com.exam.examproject.services.services.AuthService;
-import com.exam.examproject.web.models.LoginUserViewModel;
-import com.exam.examproject.web.models.RegisterUserViewModel;
+import com.exam.examproject.web.base.BaseController;
+import com.exam.examproject.web.view.models.LoginUserViewModel;
+import com.exam.examproject.web.view.models.RegisterUserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

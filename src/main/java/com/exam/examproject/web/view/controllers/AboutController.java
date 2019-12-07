@@ -1,6 +1,6 @@
-package com.exam.examproject.web.controllers;
+package com.exam.examproject.web.view.controllers;
 
-import org.springframework.stereotype.Component;
+import com.exam.examproject.web.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;

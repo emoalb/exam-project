@@ -1,18 +1,17 @@
-package com.exam.examproject.web.controllers;
+package com.exam.examproject.web.view.controllers;
 
-import com.exam.examproject.errors.PostNotFoundException;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.services.models.CreatePostServiceModel;
 import com.exam.examproject.services.models.DetailsPostServiceModel;
 import com.exam.examproject.services.models.EditPostServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
-import com.exam.examproject.web.models.EditPostViewModel;
+import com.exam.examproject.web.base.BaseController;
+import com.exam.examproject.web.view.models.EditPostViewModel;
 import com.exam.examproject.services.services.PostsService;
-import com.exam.examproject.web.models.CreatePostViewModel;
+import com.exam.examproject.web.view.models.CreatePostViewModel;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -61,16 +60,13 @@ public class PostController extends BaseController {
         LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
         createPostServiceModel.setCreator_id(loginResponseModel.getId());
         this.postService.createPost(createPostServiceModel);
-
         return super.redirect("/");
     }
 
     @GetMapping("/edit")
     public ModelAndView getEditPost(@RequestParam(value = "id", required = true) String id) {
-
         EditPostServiceModel editPostServiceModel = this.postService.findPostToEdit(id);
         return super.render("posts/edit", "post", editPostServiceModel);
-
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -78,13 +74,12 @@ public class PostController extends BaseController {
         System.out.println(jsonResponse);
         EditPostViewModel editViewModel = this.gson.fromJson(jsonResponse, EditPostViewModel.class);
         EditPostServiceModel editPostServiceModel = this.modelMapper.map(editViewModel, EditPostServiceModel.class);
-
         this.postService.updatePost(editPostServiceModel);
         return super.redirect("/");
     }
 
-    @GetMapping("/details")
-    public ModelAndView getDetailsPost(@RequestParam(value = "id", required = true) String id) {
+    @GetMapping("/details/{id}")
+    public ModelAndView getDetailsPost(@PathVariable("id") String id) {
 
         DetailsPostServiceModel detailsPostServiceModel = this.postService.findPostDetails(id);
         return super.render("posts/details", "post", detailsPostServiceModel);

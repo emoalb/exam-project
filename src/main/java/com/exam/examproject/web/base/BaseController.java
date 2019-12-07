@@ -1,4 +1,4 @@
-package com.exam.examproject.web.controllers;
+package com.exam.examproject.web.base;
 
 
 import org.springframework.http.HttpStatus;

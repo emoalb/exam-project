@@ -1,15 +1,5 @@
 <th:block th:fragment>
 
-        <img th:src="${post.pictureUrl}" class="card-img-top" alt="Image for ">
-    <div class="card-body">
-        <h5 class="card-title">[[${#strings.capitalize(post.title)}]]</h5>
-        <p class="card-text">[[${post.description}]]</p>
-        <p class="card-text">Creator: [[${#strings.capitalize(post.creatorUsername)}]]
-            <th:block th:if="${session.user.username!=post.creatorUsername}"><a
-                    th:href="@{/messages/new(name=${post.creatorUsername})}" class="btn btn-primary">Send message</a>
-            </th:block>
-        </p>
 
-    </div>
 
 </th:block>

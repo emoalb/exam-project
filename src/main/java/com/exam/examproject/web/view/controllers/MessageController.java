@@ -1,4 +1,4 @@
-package com.exam.examproject.web.controllers;
+package com.exam.examproject.web.view.controllers;
 
 
 import com.exam.examproject.errors.UserNotFoundException;
@@ -6,8 +6,8 @@ import com.exam.examproject.services.models.CreateMessageServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.services.models.MessageServiceModel;
 import com.exam.examproject.services.services.MessagesService;
-import com.exam.examproject.web.models.CreateMessageViewModel;
-import com.exam.examproject.web.models.CreatePostViewModel;
+import com.exam.examproject.web.base.BaseController;
+import com.exam.examproject.web.view.models.CreateMessageViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

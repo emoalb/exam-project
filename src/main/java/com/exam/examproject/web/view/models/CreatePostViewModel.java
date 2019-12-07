@@ -1,4 +1,4 @@
-package com.exam.examproject.web.models;
+package com.exam.examproject.web.view.models;
 
 import com.exam.examproject.config.validations.StartWithCapital;
 import lombok.Getter;
