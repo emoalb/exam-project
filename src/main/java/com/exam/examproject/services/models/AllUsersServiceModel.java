@@ -10,11 +10,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponseModel {
-
+public class AllUsersServiceModel {
     private String id;
+
     private String username;
-    private String userRole;
 
 
+    private String email;
+
+
+    private UserRole role;
 }

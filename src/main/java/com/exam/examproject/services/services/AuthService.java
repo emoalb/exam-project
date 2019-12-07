@@ -6,6 +6,6 @@ import com.exam.examproject.services.models.RegisterUserServiceModel;
 
 public interface AuthService {
     void register(RegisterUserServiceModel registerUserServiceModel) throws Exception;
-
     LoginResponseModel login(LoginUserServiceModel loginUserServiceModel) throws Exception;
+    void SeedModerator();
 }

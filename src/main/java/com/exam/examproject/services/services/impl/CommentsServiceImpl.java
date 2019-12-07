@@ -11,6 +11,7 @@ import com.exam.examproject.repositories.UserRepository;
 import com.exam.examproject.services.models.CommentServiceModel;
 import com.exam.examproject.services.models.CreateCommentServiceModel;;
 import com.exam.examproject.services.services.CommentsService;
+import com.exam.examproject.services.services.DatesService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,15 @@ public class CommentsServiceImpl implements CommentsService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+private final DatesService datesService;
 
     @Autowired
-    CommentsServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    CommentsServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository, ModelMapper modelMapper, DatesService datesService) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.datesService = datesService;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class CommentsServiceImpl implements CommentsService {
         Optional<User> user = this.userRepository.findById(createCommentServiceModel.getCreatorId());
         if (user.isEmpty()) throw new UserNotFoundException("Invalid user!");
         comment.setCreator(user.get());
+         comment.setDate(this.datesService.getCurrentDate());
         this.commentRepository.save(comment);
 
     }

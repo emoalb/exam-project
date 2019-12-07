@@ -14,7 +14,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Send</button>
-                <a class="btn btn-outline-primary" th:href="@{/posts/details?(id=${postId})}">Back</a>
+                <a class="btn btn-outline-primary" th:href="@{/posts/details/{id}(id=${postId})}">Back</a>
 
             </form>
         </div>

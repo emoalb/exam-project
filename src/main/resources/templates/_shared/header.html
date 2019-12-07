@@ -14,6 +14,9 @@
                 </li>
                 <th:block th:unless="${session.user==null}">
                     <th:block th:include="~{_fragments/nav-user}"/>
+                    <th:block th:if="${session.user.userRole=='MODERATOR'}">
+                        <th:block th:include="~{_fragments/nav-admin}"/>
+                    </th:block>
                 </th:block>
                 <th:block th:if="${session.user==null}">
                     <th:block th:include="~{_fragments/nav-guest}"/>

@@ -15,7 +15,7 @@ const post = ({id, title, pictureUrl, description, creatorUsername}) => {
 </div>
 </div>`
 };
-
+$('#loader').show();
 fetch(URLS.posts)
     .then(response => response.json())
     .then(posts => {
@@ -24,8 +24,17 @@ fetch(URLS.posts)
             const itemString = post(p);
             result += itemString;
         });
-        let row = document.createElement('div');
-        $(row).addClass("row");
-        $(row).html(result);
-$('#all-posts').html(row)
+
+        console.log("\"" + result + "\"");
+        if (result === '') {
+            let p = document.createElement('p');
+            $(p).html("No posts yet!");
+            $('#all-posts').append(p);
+        } else {
+            let row = document.createElement('div');
+            $(row).addClass("row");
+            $(row).html(result);
+            $('#all-posts').html(row);
+        }
+        $('#loader').hide();
     });

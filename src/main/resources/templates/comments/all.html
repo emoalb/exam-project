@@ -14,10 +14,10 @@
             <tbody>
             <th:block th:each="comment : ${allComments}">
                 <tr>
-                    <th scope="row"><i style="margin-right: 0.5rem;" class="far fa-envelope"></i></th>
+                    <th scope="row"><i style="margin-right: 0.5rem;" class="far fa-comment"></i></th>
                     <td>[[${comment.comment}]]</td>
                     <td>[[${comment.creatorUsername}]]</td>
-
+                    <td>[[${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}]]</td>
                 </tr>
             </th:block>
             </tbody>

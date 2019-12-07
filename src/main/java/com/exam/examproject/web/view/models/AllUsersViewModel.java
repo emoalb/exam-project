@@ -1,4 +1,4 @@
-package com.exam.examproject.services.models;
+package com.exam.examproject.web.view.models;
 
 import com.exam.examproject.domain.enums.UserRole;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponseModel {
+public class AllUsersViewModel {
 
     private String id;
+
     private String username;
-    private String userRole;
 
+    private String email;
 
+    private String role;
 }
