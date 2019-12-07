@@ -1,5 +1,6 @@
 package com.exam.examproject.services.services.impl;
 
+import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.domain.enums.UserRole;
 import com.exam.examproject.errors.UserNotFoundException;
@@ -35,7 +36,7 @@ public class UsersServiceImpl  implements UsersService {
     @Override
     public void deleteUserById(String id) throws UserNotFoundException {
         Optional<User> user = this.userRepository.findById(id);
-        if(user.isEmpty())throw new UserNotFoundException("Invalid user!");
+        if(user.isEmpty())throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
         this.userRepository.delete(user.get());
     }
 
@@ -43,8 +44,7 @@ public class UsersServiceImpl  implements UsersService {
     public void upgradeToAdmin(String id) throws UserNotFoundException {
         Optional<User> userOptional = this.userRepository.findById(id);
         if(userOptional.isEmpty()){
-            System.out.println("Exception");
-            throw new UserNotFoundException("Invalid user!");
+            throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
         }
         User user = userOptional.get();
         user.setRole(UserRole.ADMIN);

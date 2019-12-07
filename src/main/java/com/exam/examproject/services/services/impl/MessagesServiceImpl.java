@@ -1,5 +1,6 @@
 package com.exam.examproject.services.services.impl;
 
+import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.Message;
 import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.errors.UserNotFoundException;
@@ -33,12 +34,12 @@ private final ModelMapper modelMapper;
     public void sendMessage(CreateMessageServiceModel createMessageServiceModel) throws UserNotFoundException {
        Optional<User> sender = this.userRepository.findByUsername(createMessageServiceModel.getSender());
         if(sender.isEmpty()){
-            throw new UserNotFoundException("Invalid user!");
+            throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
 
         }
         Optional<User> receiver = this.userRepository.findByUsername(createMessageServiceModel.getReceiver());
         if(receiver.isEmpty()){
-            throw new UserNotFoundException("Invalid user!");
+            throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
 
         }
         Message message = new Message();

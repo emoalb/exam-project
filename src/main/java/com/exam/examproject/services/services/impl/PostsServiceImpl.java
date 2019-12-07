@@ -1,5 +1,6 @@
 package com.exam.examproject.services.services.impl;
 
+import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.Post;
 import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.errors.PostNotFoundException;
@@ -40,7 +41,7 @@ public class PostsServiceImpl implements PostsService {
         Optional<User> user = this.userRepository.findById(createPostServiceModel.getCreator_id());
         Post post = this.modelMapper.map(createPostServiceModel, Post.class);
         if (user.isEmpty()) {
-            throw new UserNotFoundException("Invalid user!");
+            throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
         }
         post.setCreator(user.get());
         this.postRepository.save(post);
@@ -58,7 +59,7 @@ public class PostsServiceImpl implements PostsService {
         Post post = this.modelMapper.map(editPostServiceModel, Post.class);
         Optional<User> user = this.userRepository.findByUsername(editPostServiceModel.getCreatorUsername());
         if (user.isEmpty()) {
-            throw new UserNotFoundException("Invalid User");
+            throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
         }
         post.setCreator(user.get());
         this.postRepository.save(post);
@@ -80,7 +81,7 @@ public class PostsServiceImpl implements PostsService {
 
         Optional<Post> post = this.postRepository.findById(id);
         if (post.isEmpty()) {
-            throw new PostNotFoundException("Post non existent");
+            throw new PostNotFoundException(Constants.POST_NOT_FOUND_MESSAGE);
         }
 
         return post.get();

@@ -13,9 +13,11 @@ const post = ({id, title, pictureUrl, description, creatorUsername}) => {
         <a class="btn btn-primary" href="/posts/details/${id}">Details</a>
     </div>
 </div>
-</div>`
+</div>
+`
 };
 $('#loader').show();
+
 fetch(URLS.posts)
     .then(response => response.json())
     .then(posts => {
@@ -36,5 +38,6 @@ fetch(URLS.posts)
             $(row).html(result);
             $('#all-posts').html(row);
         }
+
         $('#loader').hide();
     });

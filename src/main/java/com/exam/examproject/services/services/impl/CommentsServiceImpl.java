@@ -1,5 +1,6 @@
 package com.exam.examproject.services.services.impl;
 
+import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.Comment;
 import com.exam.examproject.domain.entities.Post;
 import com.exam.examproject.domain.entities.User;
@@ -42,7 +43,7 @@ private final DatesService datesService;
     public List<CommentServiceModel> getAllComments(String postId) throws PostNotFoundException {
         Optional<Post> post = this.postRepository.findById(postId);
 
-        if (post.isEmpty()) throw new PostNotFoundException("Post non existent!");
+        if (post.isEmpty()) throw new PostNotFoundException(Constants.POST_NOT_FOUND_MESSAGE);
         List<Comment> allComments = this.commentRepository.findAllByPost_Id(postId);
         return allComments.stream().map(comment -> this.modelMapper.map(comment, CommentServiceModel.class)).collect(Collectors.toList());
 
@@ -53,10 +54,10 @@ private final DatesService datesService;
         Comment comment = new Comment();
         comment.setComment(createCommentServiceModel.getComment());
         Optional<Post> post = this.postRepository.findById(createCommentServiceModel.getPostId());
-        if (post.isEmpty()) throw new PostNotFoundException("Post non existent!");
+        if (post.isEmpty()) throw new PostNotFoundException(Constants.POST_NOT_FOUND_MESSAGE);
         comment.setPost(post.get());
         Optional<User> user = this.userRepository.findById(createCommentServiceModel.getCreatorId());
-        if (user.isEmpty()) throw new UserNotFoundException("Invalid user!");
+        if (user.isEmpty()) throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
         comment.setCreator(user.get());
          comment.setDate(this.datesService.getCurrentDate());
         this.commentRepository.save(comment);

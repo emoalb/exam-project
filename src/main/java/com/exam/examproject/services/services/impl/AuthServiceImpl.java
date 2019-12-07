@@ -1,5 +1,6 @@
 package com.exam.examproject.services.services.impl;
 
+import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.domain.enums.UserRole;
 import com.exam.examproject.repositories.UserRepository;
@@ -41,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
     public void register(RegisterUserServiceModel registerUserServiceModel) throws Exception {
         registerUserServiceModel.setUsername(registerUserServiceModel.getUsername().toLowerCase());
         if (!authValidationService.isValid(registerUserServiceModel)) {
-            throw new Exception("Invalid user data");
+            throw new Exception(Constants.USER_NOT_FOUND_MESSAGE);
         }
         User user = this.modelMapper.map(registerUserServiceModel, User.class);
         user.setPassword(this.hashingService.hash(user.getPassword()));
@@ -54,10 +55,10 @@ public class AuthServiceImpl implements AuthService {
         Optional<User> userOptional = this.userRepository.findByUsernameAndPassword(loginUserServiceModel.getUsername(),
                 this.hashingService.hash(loginUserServiceModel.getPassword()));
         if (userOptional.isEmpty()) {
-            throw new Exception("Invalid user");
+            throw new Exception(Constants.USER_NOT_FOUND_MESSAGE);
         }
         User user = userOptional.get();
-        return new LoginResponseModel(user.getId(), user.getUsername(),user.getRole().toString());
+        return new LoginResponseModel(user.getId(), user.getUsername(), user.getRole().toString());
     }
 
     @Override

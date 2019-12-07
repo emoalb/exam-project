@@ -27,7 +27,8 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role = UserRole.USER;
-
+    @OneToOne(mappedBy = "user")
+    private UserProfile userProfile;
     @OneToMany(targetEntity = Post.class, mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 
