@@ -23,5 +23,6 @@ public class Message extends BaseEntity {
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "receiver_id", referencedColumnName = "id", nullable = false)
     private User receiveUser;
+
 }
 

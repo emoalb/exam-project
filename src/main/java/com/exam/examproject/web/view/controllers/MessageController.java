@@ -38,9 +38,9 @@ public class MessageController extends BaseController {
 
     @GetMapping("/all")
     public ModelAndView getAllMessages(HttpSession session) {
-        if(session.getAttribute("user")==null)throw new UserNotFoundException("Invalid user!");
+        if (session.getAttribute("user") == null) throw new UserNotFoundException("Invalid user!");
         LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
-        List<MessageServiceModel> messageServiceModels =  this.messagesService.getAllMessages(loginResponseModel.getId());
+        List<MessageServiceModel> messageServiceModels = this.messagesService.getAllMessages(loginResponseModel.getId());
 
         return super.render("messages/all", "messages", messageServiceModels);
     }
@@ -57,7 +57,7 @@ public class MessageController extends BaseController {
             return super.render("messages/create");
         }
         CreateMessageServiceModel createMessageServiceModel = this.modelMapper.map(createMessageViewModel, CreateMessageServiceModel.class);
-        if(session.getAttribute("user")==null)throw new UserNotFoundException("Invalid user!");
+        if (session.getAttribute("user") == null) throw new UserNotFoundException("Invalid user!");
         createMessageServiceModel.setSender(((LoginResponseModel) session.getAttribute("user")).getUsername());
         this.messagesService.sendMessage(createMessageServiceModel);
 

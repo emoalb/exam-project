@@ -18,6 +18,9 @@
                     <td>[[${comment.comment}]]</td>
                     <td>[[${comment.creatorUsername}]]</td>
                     <td>[[${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}]]</td>
+                    <th:block th:if="${session.user.userRole =='ADMIN'}">
+                        <td><a class="btn btn-outline-danger" th:href="@{/comments/delete/{postId}/{commentId}(postId=${postId},commentId=${comment.id})}">Delete</a></td>
+                    </th:block>
                 </tr>
             </th:block>
             </tbody>

@@ -4,6 +4,7 @@ import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.Comment;
 import com.exam.examproject.domain.entities.Post;
 import com.exam.examproject.domain.entities.User;
+import com.exam.examproject.errors.CommentNotFoundException;
 import com.exam.examproject.errors.PostNotFoundException;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.CommentRepository;
@@ -28,7 +29,7 @@ public class CommentsServiceImpl implements CommentsService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-private final DatesService datesService;
+    private final DatesService datesService;
 
     @Autowired
     CommentsServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository, ModelMapper modelMapper, DatesService datesService) {
@@ -59,8 +60,15 @@ private final DatesService datesService;
         Optional<User> user = this.userRepository.findById(createCommentServiceModel.getCreatorId());
         if (user.isEmpty()) throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
         comment.setCreator(user.get());
-         comment.setDate(this.datesService.getCurrentDate());
+        comment.setDate(this.datesService.getCurrentDate());
         this.commentRepository.save(comment);
 
+    }
+
+    @Override
+    public void deleteComment(String id) throws CommentNotFoundException {
+        Optional<Comment> comment = this.commentRepository.findById(id);
+        if (comment.isEmpty()) throw new CommentNotFoundException(Constants.COMMENT_NOT_FOUND_MESSAGE);
+        this.commentRepository.delete(comment.get());
     }
 }

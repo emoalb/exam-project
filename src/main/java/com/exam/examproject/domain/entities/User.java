@@ -7,6 +7,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -27,8 +28,13 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role = UserRole.USER;
-    @OneToOne(mappedBy = "user")
-    private UserProfile userProfile;
+
+    @Column(name = "creation_date")
+    private Date creationDate;
+
+    @OneToMany(targetEntity = Contact.class, mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Contact> contacts;
+
     @OneToMany(targetEntity = Post.class, mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 

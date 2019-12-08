@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 
 public class CommentServiceModel {
+    private String id;
     private String comment;
     private String creatorUsername;
     private Date date;

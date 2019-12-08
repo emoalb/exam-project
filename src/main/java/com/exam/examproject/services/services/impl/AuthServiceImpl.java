@@ -8,10 +8,7 @@ import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.services.models.LoginUserServiceModel;
 import com.exam.examproject.services.models.RegisterUserServiceModel;
 import com.exam.examproject.services.models.SeedUserServiceModel;
-import com.exam.examproject.services.services.AuthService;
-import com.exam.examproject.services.services.AuthValidationService;
-import com.exam.examproject.services.services.HashingService;
-import com.exam.examproject.services.services.SeedUserService;
+import com.exam.examproject.services.services.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +23,17 @@ public class AuthServiceImpl implements AuthService {
     private final HashingService hashingService;
     private final SeedUserService seedUserService;
     private final AuthValidationService authValidationService;
+    private final DatesService datesService;
     private final ModelMapper modelMapper;
 
 
     @Autowired
-    public AuthServiceImpl(UserRepository userRepository, HashingService hashingService, SeedUserService seedUserService, AuthValidationService authValidationService, ModelMapper modelMapper) {
+    public AuthServiceImpl(UserRepository userRepository, HashingService hashingService, SeedUserService seedUserService, AuthValidationService authValidationService, DatesService datesService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.hashingService = hashingService;
         this.seedUserService = seedUserService;
         this.authValidationService = authValidationService;
+        this.datesService = datesService;
         this.modelMapper = modelMapper;
     }
 
@@ -46,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
         }
         User user = this.modelMapper.map(registerUserServiceModel, User.class);
         user.setPassword(this.hashingService.hash(user.getPassword()));
+        user.setCreationDate(this.datesService.getCurrentDate());
         this.userRepository.save(user);
     }
 

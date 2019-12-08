@@ -1,7 +1,1 @@
 @import url("https://use.fontawesome.com/releases/v5.4.2/css/all.css");
-
-.message {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 2s 3s, opacity 5s linear;
-}

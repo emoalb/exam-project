@@ -7,6 +7,7 @@ import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.services.services.CommentsService;
 import com.exam.examproject.web.base.BaseController;
 import com.exam.examproject.web.view.models.CreateCommentViewModel;
+import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,7 @@ public class CommentController extends BaseController {
     @PostMapping("/all/{id}")
     public ModelAndView postComment(@Valid @ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, BindingResult bindingResult,
                                     @PathVariable("id") String id, HttpSession session) {
-        if(session.getAttribute("user")==null)throw new UserNotFoundException("Invalid user!");
+        if (session.getAttribute("user") == null) throw new UserNotFoundException("Invalid user!");
         if (bindingResult.hasErrors()) {
             List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
             String[] attrNames = {"allComments", "postId"};
@@ -60,5 +61,11 @@ public class CommentController extends BaseController {
         createCommentServiceModel.setPostId(id);
         this.commentsService.createComment(createCommentServiceModel);
         return super.redirect("/comments/all/" + id);
+    }
+
+    @GetMapping("/delete/{postId}/{commentId}")
+    public ModelAndView getDeleteComment(@PathVariable("postId") String postId, @PathVariable("commentId") String commentId) {
+        this.commentsService.deleteComment(commentId);
+        return super.redirect("/comments/all/" + postId);
     }
 }
