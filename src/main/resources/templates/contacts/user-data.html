@@ -1,0 +1,21 @@
+<th:block th:fragment>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">User name</th>
+            <th scope="col">Creation Date</th>
+            <th scope="col">Number of contacts</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"><i style="margin-right: 0.5rem;" class="far fa-user"></i></th>
+                <td>[[${user.username}]]</td>
+                <td>[[${user.creationDate}]]</td>
+                <td>[[${comments.length}]]</td>
+            </tr>
+        </tbody>
+    </table>
+
+</th:block>

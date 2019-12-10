@@ -12,4 +12,5 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message,String> {
 
 List<Message> getAllByReceiveUser_Id(String id);
+
 }

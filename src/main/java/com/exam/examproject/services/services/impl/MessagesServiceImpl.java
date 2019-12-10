@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class MessagesServiceImpl implements MessagesService {
-private final UserRepository userRepository;
-private final MessageRepository messageRepository;
-private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final MessageRepository messageRepository;
+    private final ModelMapper modelMapper;
 
-@Autowired
+    @Autowired
     public MessagesServiceImpl(UserRepository userRepository, MessageRepository messageRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.messageRepository = messageRepository;
@@ -32,13 +32,13 @@ private final ModelMapper modelMapper;
 
     @Override
     public void sendMessage(CreateMessageServiceModel createMessageServiceModel) throws UserNotFoundException {
-       Optional<User> sender = this.userRepository.findByUsername(createMessageServiceModel.getSender());
-        if(sender.isEmpty()){
+        Optional<User> sender = this.userRepository.findByUsername(createMessageServiceModel.getSender());
+        if (sender.isEmpty()) {
             throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
 
         }
         Optional<User> receiver = this.userRepository.findByUsername(createMessageServiceModel.getReceiver());
-        if(receiver.isEmpty()){
+        if (receiver.isEmpty()) {
             throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
 
         }
@@ -50,9 +50,10 @@ private final ModelMapper modelMapper;
     }
 
     @Override
-    public List<MessageServiceModel> getAllMessages(String id) {
-
-    List<Message> allMessages = this.messageRepository.getAllByReceiveUser_Id(id);
+    public List<MessageServiceModel> getAllMessages(String userId) {
+        Optional<User> user = this.userRepository.findById(userId);
+        if (user.isEmpty()) throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
+        List<Message> allMessages = this.messageRepository.getAllByReceiveUser_Id(userId);
         return allMessages.stream().map(message -> this.modelMapper.map(message, MessageServiceModel.class)).collect(Collectors.toList());
     }
 
