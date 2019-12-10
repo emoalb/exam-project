@@ -1,3 +1,40 @@
 <th:block th:fragment>
+    <div class="container">
+        <div class="py-5 text-center">
+            <form class="form-inline" th:action="@{/contacts/{id}(id=${session.user.id})}"
+                  th:object="${createContactViewModel}"
+                  th:method="post">
+                <div class="form-group">
+                    <label for="phone-number">Phone number:</label>
+                    <input type="text" class="form-control"
+                           th:classappend="${#fields.hasErrors('phoneNumber')}? 'is-invalid'" th:field="*{phoneNumber}"
+                           id="phone-number" placeholder="Type phone number here.....">
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Error
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="contact-name">Contact name:</label>
+                    <input type="text" class="form-control"
+                           th:classappend="${#fields.hasErrors('contactName')}? 'is-invalid'" th:field="*{contactName}"
+                           id="contact-name" placeholder="Type phone number here.....">
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}">Error
+                    </div>
+                </div>
 
+                <div class="form-group mb-2">
+                    <label for="town">Town:</label>
+                    <select th:field="*{town}" id="town" class="form-control">
+                        <option th:each="option : ${T(com.exam.examproject.domain.enums.Town).values()}"
+                                th:value="${option}" th:text="${option}"></option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create</button>
+
+
+            </form>
+        </div>
+    </div>
 </th:block>

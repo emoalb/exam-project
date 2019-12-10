@@ -27,7 +27,7 @@ public class LoginControllerTest {
     protected MockMvc mockMvc;
 
     @Test
-    void getLogin_shouldReturnLoginViewWithResponce200() throws Exception {
+    void getLogin_shouldReturnLoginViewWithResponse200() throws Exception {
         mockMvc.perform(get("/users/login")).andExpect(status().isOk()).andExpect(view().name("_layouts/index"))
                 .andExpect(model().attribute("view","login"));
     }

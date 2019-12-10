@@ -8,4 +8,7 @@
 <li class="nav-item">
     <a th:href="@{/users/logout}" class="nav-link" >Logout</a>
 </li>
+    <li class="nav-item">
+        <a th:href="@{/contacts/{id}(id=${session.user.id})}" class="nav-link" >Contacts</a>
+    </li>
 </th:block>

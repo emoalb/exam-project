@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Contact extends BaseEntity {
 
     @Column(name = "phone_number", nullable = false)
-    private Integer entity;
+    private String phoneNumber;
 
     @Column(name = "contact_name",nullable = false)
     private String contactName;
