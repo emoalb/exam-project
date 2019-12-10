@@ -11,9 +11,9 @@
         <tbody>
             <tr>
                 <th scope="row"><i style="margin-right: 0.5rem;" class="far fa-user"></i></th>
-                <td>[[${user.username}]]</td>
-                <td>[[${user.creationDate}]]</td>
-                <td>[[${contacts.length}]]</td>
+                <td>[[${#strings.capitalize(user.username)}]]</td>
+                <td>[[${#dates.format(user.creationDate,'dd-MM-yyyy HH:mm')}]]</td>
+                <td>[[${#lists.size(contacts)}]]</td>
             </tr>
         </tbody>
     </table>

@@ -6,6 +6,7 @@ import com.exam.examproject.domain.enums.UserRole;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.UserRepository;
 import com.exam.examproject.services.models.AllUsersServiceModel;
+import com.exam.examproject.services.models.UserServiceModel;
 import com.exam.examproject.services.services.UsersService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,13 @@ public class UsersServiceImpl  implements UsersService {
         User user = userOptional.get();
         user.setRole(UserRole.ADMIN);
         this.userRepository.save(user);
+    }
+
+    @Override
+    public UserServiceModel findUserById(String userId) throws UserNotFoundException {
+      Optional<User> userOptional =  this.userRepository.findById(userId);
+      if(userOptional.isEmpty())throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
+      UserServiceModel userServiceModel = this.modelMapper.map(userOptional.get(),UserServiceModel.class);
+        return userServiceModel;
     }
 }
