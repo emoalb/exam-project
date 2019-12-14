@@ -1,12 +1,10 @@
 package com.exam.examproject.web.view.controllers;
 
 
-import com.exam.examproject.services.models.LoginResponseModel;
-import com.exam.examproject.services.models.LoginUserServiceModel;
+
 import com.exam.examproject.services.models.RegisterUserServiceModel;
 import com.exam.examproject.services.services.AuthService;
 import com.exam.examproject.web.base.BaseController;
-import com.exam.examproject.web.view.models.LoginUserViewModel;
 import com.exam.examproject.web.view.models.RegisterUserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +39,6 @@ public class AuthController extends BaseController {
         return super.render("login");
     }
 
-//    @GetMapping("/logout")
-//    public ModelAndView getLogout(HttpSession session) {
-//        session.setAttribute("user", null);
-//        return super.redirect("/");
-//    }
 
     @PostMapping("/register")
     public ModelAndView postRegisterForm(@ModelAttribute RegisterUserViewModel registerUserViewModel, HttpSession session) {
@@ -59,15 +52,4 @@ public class AuthController extends BaseController {
         return super.redirect("/users/login");
     }
 
-//    @PostMapping("/login")
-//    public ModelAndView postRegisterForm(@ModelAttribute LoginUserViewModel loginUserViewModel, HttpSession session) {
-//        LoginUserServiceModel loginUserServiceModel = this.modelMapper.map(loginUserViewModel, LoginUserServiceModel.class);
-//        try {
-//            LoginResponseModel loginResponseModel = this.authService.login(loginUserServiceModel);
-//            session.setAttribute("user", loginResponseModel);
-//        } catch (Exception e) {
-//            return super.renderError(e.getMessage());
-//        }
-//        return super.redirect("/");
-//    }
 }

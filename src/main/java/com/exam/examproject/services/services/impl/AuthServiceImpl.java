@@ -1,11 +1,9 @@
 package com.exam.examproject.services.services.impl;
 
 import com.exam.examproject.common.Constants;
+import com.exam.examproject.domain.entities.Role;
 import com.exam.examproject.domain.entities.User;
-import com.exam.examproject.domain.enums.UserRole;
 import com.exam.examproject.repositories.UserRepository;
-import com.exam.examproject.services.models.LoginResponseModel;
-import com.exam.examproject.services.models.LoginUserServiceModel;
 import com.exam.examproject.services.models.RegisterUserServiceModel;
 import com.exam.examproject.services.models.SeedUserServiceModel;
 import com.exam.examproject.services.services.*;
@@ -13,8 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -49,21 +47,11 @@ public class AuthServiceImpl implements AuthService {
         this.userRepository.save(user);
     }
 
-   @Override
-    public LoginResponseModel login(LoginUserServiceModel loginUserServiceModel) throws Exception {
-        loginUserServiceModel.setUsername(loginUserServiceModel.getUsername().toLowerCase());
-        Optional<User> userOptional = this.userRepository.findByUsernameAndPassword(loginUserServiceModel.getUsername(),
-                this.hashingService.hash(loginUserServiceModel.getPassword()));
-        if (userOptional.isEmpty()) {
-            throw new Exception(Constants.USER_NOT_FOUND_MESSAGE);
-        }
-        User user = userOptional.get();
-        return new LoginResponseModel(user.getId(), user.getUsername(), user.getRole().toString());
-    }
 
     @Override
     public void SeedModerator() {
-        List<User> users = this.userRepository.findAllByRole(UserRole.MODERATOR);
+
+        List<User> users = this.userRepository.getAdminList("ROLE_ADMIN");
         if (!users.isEmpty()) {
             System.out.println("Moderator already exist");
             return;
@@ -71,9 +59,10 @@ public class AuthServiceImpl implements AuthService {
         String username = "moderator";
         String email = "some@email.com";
         String password = this.hashingService.hash("12345");
-
+        Role role = new Role();
+        role.setAuthority("ROLE_ADMIN");
         SeedUserServiceModel seedUserServiceModel =
-                new SeedUserServiceModel(username, password, email, UserRole.MODERATOR);
+                new SeedUserServiceModel(username, password, email, new HashSet<>(Collections.singletonList(role)));
         this.seedUserService.SeedUser(seedUserServiceModel);
 
     }

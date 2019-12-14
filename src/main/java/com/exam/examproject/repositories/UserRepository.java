@@ -1,8 +1,10 @@
 package com.exam.examproject.repositories;
 
 import com.exam.examproject.domain.entities.User;
-import com.exam.examproject.domain.enums.UserRole;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,10 +15,11 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByUsername(String username);
 
-    Optional<User> findByUsernameAndPassword(String username, String password);
 
-    List<User> findAllByRole(UserRole userRole);
 
-    List<User> findAllByOrderByRoleAscUsernameAsc();
+ @Query("SELECT u FROM User u INNER JOIN u.authorities a WHERE a.authority = :role ")
+  List<User> getAdminList(@Param("role") String userRole);
+
+    List<User> findAllByOrderByUsernameAsc();
 
 }

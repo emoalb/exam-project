@@ -2,7 +2,6 @@ package com.exam.examproject.services.services.impl;
 
 import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.User;
-import com.exam.examproject.domain.enums.UserRole;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.UserRepository;
 import com.exam.examproject.services.models.AllUsersServiceModel;
@@ -34,7 +33,7 @@ public class UsersServiceImpl  implements UsersService {
 
     @Override
     public List<AllUsersServiceModel> allUsers() {
-        List<User> users = this.userRepository.findAllByOrderByRoleAscUsernameAsc();
+        List<User> users = this.userRepository.findAllByOrderByUsernameAsc();
         List<AllUsersServiceModel> allUsersServiceModels = users.stream().map(user ->
                 this.modelMapper.map(user, AllUsersServiceModel.class)).collect(Collectors.toList());
         return allUsersServiceModels;
@@ -62,7 +61,7 @@ public class UsersServiceImpl  implements UsersService {
             throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
         }
         User user = userOptional.get();
-        user.setRole(UserRole.ADMIN);
+      //  user.setRole(UserRole.ADMIN);
         this.userRepository.save(user);
     }
 

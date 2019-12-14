@@ -1,6 +1,6 @@
 package com.exam.examproject.services.models;
 
-import com.exam.examproject.domain.enums.UserRole;
+//import com.exam.examproject.domain.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +19,5 @@ public class AllUsersServiceModel {
     private String email;
 
 
-    private UserRole role;
+  //  private UserRole role;
 }

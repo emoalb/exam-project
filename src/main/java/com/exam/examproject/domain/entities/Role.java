@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -20,6 +18,7 @@ import java.util.Set;
 public class Role
         extends BaseEntity
         implements GrantedAuthority {
+
     private String authority;
 
     @ManyToMany(mappedBy = "authorities")

@@ -14,9 +14,11 @@
                 </li>
                <!-- <th:block th:unless="${session.user==null}">-->
                 <th:block sec:authorize="isAuthenticated()">
-                   <!-- <th:block th:if="${session.user!=null} ? ${session.user.userRole=='MODERATOR'}">
+                   <!-- <th:block th:if="${session.user!=null} ? ${session.user.userRole=='MODERATOR'}">-->
+                     <div sec:authorize="hasRole('ROLE_ADMIN')" >
                         <th:block th:include="~{_fragments/nav-admin}"/>
-                    </th:block>-->
+                </div>
+                 <!--    </th:block>-->
                     <th:block th:include="~{_fragments/nav-user}"/>
                 </th:block>
              <!--   <th:block th:if="${session.user==null}">-->

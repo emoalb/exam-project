@@ -1,6 +1,5 @@
 package com.exam.examproject.domain.entities;
 
-import com.exam.examproject.domain.enums.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,26 +25,28 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private UserRole role = UserRole.USER;
-
     @Column(name = "creation_date")
     private Date creationDate;
-
+    @Transient
     @Column
     private boolean isAccountNonExpired;
-
+    @Transient
     @Column
     private boolean isAccountNonLocked;
-
+    @Transient
     @Column
     private boolean isCredentialsNonExpired;
 
+    @Transient
     @Column
     private boolean isEnabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> authorities;
 
 
