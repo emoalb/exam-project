@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -20,6 +22,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -46,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
+                .successHandler(this.authenticationSuccessHandler)
                 .and()
                     .logout().logoutUrl("/users/logout")
                     .permitAll();
@@ -62,6 +68,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return passwordEncoder;
     }
 
+    @Bean
+    RedirectStrategy redirectStrategy() {
+        return  new DefaultRedirectStrategy();
+    }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
