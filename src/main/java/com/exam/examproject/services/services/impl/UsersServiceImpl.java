@@ -6,13 +6,19 @@ import com.exam.examproject.domain.enums.UserRole;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.UserRepository;
 import com.exam.examproject.services.models.AllUsersServiceModel;
+import com.exam.examproject.services.models.CustomUser;
 import com.exam.examproject.services.models.UserServiceModel;
 import com.exam.examproject.services.services.UsersService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +38,14 @@ public class UsersServiceImpl  implements UsersService {
         List<AllUsersServiceModel> allUsersServiceModels = users.stream().map(user ->
                 this.modelMapper.map(user, AllUsersServiceModel.class)).collect(Collectors.toList());
         return allUsersServiceModels;
+    }
+
+    @Override
+    public UserServiceModel findUserByName(String name) {
+
+        User user = this.userRepository.findByUsername(name).get();
+        UserServiceModel userServiceModel = this.modelMapper.map(user,UserServiceModel.class);
+        return userServiceModel;
     }
 
     @Override
@@ -59,4 +73,19 @@ public class UsersServiceImpl  implements UsersService {
       UserServiceModel userServiceModel = this.modelMapper.map(userOptional.get(),UserServiceModel.class);
         return userServiceModel;
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(s).get();
+
+        Set<GrantedAuthority> authorities = new HashSet<>(user.getAuthorities());
+
+        return new CustomUser(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
+    }
+
 }

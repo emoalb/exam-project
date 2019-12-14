@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,6 +32,22 @@ public class User extends BaseEntity {
 
     @Column(name = "creation_date")
     private Date creationDate;
+
+    @Column
+    private boolean isAccountNonExpired;
+
+    @Column
+    private boolean isAccountNonLocked;
+
+    @Column
+    private boolean isCredentialsNonExpired;
+
+    @Column
+    private boolean isEnabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> authorities;
+
 
     @OneToMany(targetEntity = Contact.class, mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Contact> contacts;

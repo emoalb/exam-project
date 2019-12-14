@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
         this.userRepository.save(user);
     }
 
-    @Override
+   @Override
     public LoginResponseModel login(LoginUserServiceModel loginUserServiceModel) throws Exception {
         loginUserServiceModel.setUsername(loginUserServiceModel.getUsername().toLowerCase());
         Optional<User> userOptional = this.userRepository.findByUsernameAndPassword(loginUserServiceModel.getUsername(),
