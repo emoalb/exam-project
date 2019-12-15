@@ -13,8 +13,5 @@ public class ApplicationBeanConfiguration {
         return new ModelMapper();
     }
 
-    @Bean
-    public Gson gson() {
-        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
-    }
+
 }

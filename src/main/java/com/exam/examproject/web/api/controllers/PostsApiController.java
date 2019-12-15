@@ -41,13 +41,14 @@ public class PostsApiController {
     @RequestMapping(value = "/api/edit", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     @ResponseBody
     public ResponseEntity<Map<String, String>> editPost(@Valid @RequestBody EditPostViewModel jsonResponse, BindingResult bindingResult) {
-        System.out.println(jsonResponse);
         Map<String, String> errors = new HashMap<>();
+
         if (bindingResult.hasErrors()) {
 
-            bindingResult.getFieldErrors().forEach(binding -> errors.put(binding.getField(), errors.get(binding.getDefaultMessage())));
+            bindingResult.getFieldErrors().forEach(binding -> errors.put(binding.getField(), binding.getDefaultMessage()));
             return new ResponseEntity<>(errors, HttpStatus.NOT_ACCEPTABLE);
         }
+
         EditPostServiceModel editPostServiceModel = this.modelMapper.map(jsonResponse, EditPostServiceModel.class);
         this.postsService.updatePost(editPostServiceModel);
 

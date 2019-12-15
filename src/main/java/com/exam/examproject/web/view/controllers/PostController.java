@@ -6,13 +6,10 @@ import com.exam.examproject.services.models.DetailsPostServiceModel;
 import com.exam.examproject.services.models.EditPostServiceModel;
 import com.exam.examproject.services.models.LoginResponseModel;
 import com.exam.examproject.web.base.BaseController;
-import com.exam.examproject.web.view.models.EditPostViewModel;
 import com.exam.examproject.services.services.PostsService;
 import com.exam.examproject.web.view.models.CreatePostViewModel;
-import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +25,12 @@ public class PostController extends BaseController {
 
     private final ModelMapper modelMapper;
     private final PostsService postService;
-    private final Gson gson;
 
 
     @Autowired
-    public PostController(ModelMapper modelMapper, PostsService postService, Gson gson) {
+    public PostController(ModelMapper modelMapper, PostsService postService) {
         this.modelMapper = modelMapper;
         this.postService = postService;
-        this.gson = gson;
     }
 
     @ModelAttribute("createPostModel")
