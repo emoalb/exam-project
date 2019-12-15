@@ -2,6 +2,7 @@ package com.exam.examproject.services.services.impl;
 
 import com.exam.examproject.common.Constants;
 import com.exam.examproject.domain.entities.Contact;
+import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.ContactRepository;
 import com.exam.examproject.repositories.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,9 +33,16 @@ public class ContactsServiceImpl implements ContactsService {
 
     @Override
     public void createContact(CreateContactServiceModel contactServiceModel) throws UserNotFoundException {
-        if (this.userRepository.findById(contactServiceModel.getUserId()).isEmpty())
+        Optional<User> user = this.userRepository.findById(contactServiceModel.getUserId());
+        if (user.isEmpty())
             throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
+
+        Contact contact = this.modelMapper.map(contactServiceModel, Contact.class);
+     //   contact.setUser(user.get());
+        this.contactRepository.save(contact);
+
     }
+
 
     @Override
     public List<ContactServiceModel> getAllContactsByUserId(String userId) throws UserNotFoundException {

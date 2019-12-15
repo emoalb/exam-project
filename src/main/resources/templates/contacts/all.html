@@ -3,6 +3,29 @@
         <div class="py-5 text-center">
             <th:block th:include="~{contacts/user-data}"/>
             <br/>
+            <th:block th:if="${!allContacts.empty}">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">&#35;</th>
+                        <th scope="col">Phone number</th>
+                        <th scope="col">Contact name</th>
+                        <th scope="col">Town</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="contact : ${allContacts}">
+                        <tr>
+                            <th scope="row"><i style="margin-right: 0.5rem;" class="far fa-comment"></i></th>
+                            <td>[[${contact.phoneNumber}]]</td>
+                            <td>[[${contact.contactName}]]</td>
+                            <td>[[${contact.town}]]</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </th:block>
             <th:block th:include="~{contacts/create}"/>
         </div>
     </div>

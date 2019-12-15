@@ -39,21 +39,17 @@ public class CommentController extends BaseController {
 
     @GetMapping("/all/{id}")
     public ModelAndView getAllComments(@ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, @PathVariable("id") String id) {
-        List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
-        String[] attrNames = {"allComments", "postId"};
-        Object[] objects = {commentServiceModels, id};
-        return super.render("comments/all", attrNames, objects);
+        return getModelAndView(id);
     }
+
+
 
     @PostMapping("/all/{id}")
     public ModelAndView postComment(@Valid @ModelAttribute("createCommentViewModel") CreateCommentViewModel createCommentViewModel, BindingResult bindingResult,
                                     @PathVariable("id") String id, HttpSession session) {
         if (session.getAttribute("user") == null) throw new UserNotFoundException("Invalid user!");
         if (bindingResult.hasErrors()) {
-            List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
-            String[] attrNames = {"allComments", "postId"};
-            Object[] objects = {commentServiceModels, id};
-            return super.render("comments/all", attrNames, objects);
+            return getModelAndView(id);
         }
         CreateCommentServiceModel createCommentServiceModel = this.modelMapper.map(createCommentViewModel, CreateCommentServiceModel.class);
         LoginResponseModel loginResponseModel = (LoginResponseModel) session.getAttribute("user");
@@ -67,5 +63,12 @@ public class CommentController extends BaseController {
     public ModelAndView getDeleteComment(@PathVariable("postId") String postId, @PathVariable("commentId") String commentId) {
         this.commentsService.deleteComment(commentId);
         return super.redirect("/comments/all/" + postId);
+    }
+
+    private ModelAndView getModelAndView(@PathVariable("id") String id) {
+        List<CommentServiceModel> commentServiceModels = this.commentsService.getAllComments(id);
+        String[] attrNames = {"allComments", "postId"};
+        Object[] objects = {commentServiceModels, id};
+        return super.render("comments/all", attrNames, objects);
     }
 }
