@@ -1,5 +1,6 @@
 package com.exam.examproject.web.view.controllers;
 
+import com.exam.examproject.common.Constants;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.services.models.CreatePostServiceModel;
 import com.exam.examproject.services.models.DetailsPostServiceModel;
@@ -10,13 +11,21 @@ import com.exam.examproject.services.services.PostsService;
 import com.exam.examproject.web.view.models.CreatePostViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 
 
 @Controller
@@ -39,8 +48,8 @@ public class PostController extends BaseController {
     }
 
     @GetMapping("/new")
-    public ModelAndView getCreatePost(@ModelAttribute("createPostModel") CreatePostViewModel createPostModel,HttpSession session) {
-        if(session.getAttribute("user")==null)throw  new UserNotFoundException("Invalid user!");
+    public ModelAndView getCreatePost(@ModelAttribute("createPostModel") CreatePostViewModel createPostModel, HttpSession session) {
+        if (session.getAttribute("user") == null) throw new UserNotFoundException("Invalid user!");
         return super.render("posts/create");
     }
 
@@ -59,11 +68,17 @@ public class PostController extends BaseController {
     }
 
     @GetMapping("/edit")
-    public ModelAndView getEditPost(@RequestParam(value = "id", required = true) String id) {
+    public ModelAndView getEditPost(@RequestParam(value = "id", required = true) String id, HttpSession session, Authentication authentication) {
         EditPostServiceModel editPostServiceModel = this.postService.findPostToEdit(id);
+        UserDetails userDetails =(UserDetails) authentication.getPrincipal();
+        System.out.println("**** User has authorities: " + userDetails.getAuthorities());
+
+//        if (!editPostServiceModel.getCreatorUsername()
+//                        .equals(((LoginResponseModel) session.getAttribute("user")).getUsername())) {
+//            throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
+//        }
         return super.render("posts/edit", "post", editPostServiceModel);
     }
-
 
 
     @GetMapping("/details/{id}")
@@ -77,7 +92,7 @@ public class PostController extends BaseController {
     @GetMapping("/delete")
     public ModelAndView getDeletePost(@RequestParam(value = "id", required = true) String id) {
         System.out.println(id);
-            this.postService.deletePostById(id);
+        this.postService.deletePostById(id);
 
 
         return super.redirect("/");

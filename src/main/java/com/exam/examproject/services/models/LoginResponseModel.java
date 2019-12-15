@@ -15,6 +15,4 @@ public class LoginResponseModel {
     private String id;
     private String username;
 
-
-
 }

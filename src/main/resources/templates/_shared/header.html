@@ -12,16 +12,12 @@
                 <li class="nav-item">
                     <a th:href="@{/}" class="nav-link"> Home</a>
                 </li>
-               <!-- <th:block th:unless="${session.user==null}">-->
                 <th:block sec:authorize="isAuthenticated()">
-                   <!-- <th:block th:if="${session.user!=null} ? ${session.user.userRole=='MODERATOR'}">-->
-                     <div sec:authorize="hasRole('ROLE_OWNER')" >
+                    <div sec:authorize="hasRole('ROLE_OWNER')">
                         <th:block th:include="~{_fragments/nav-admin}"/>
-                </div>
-                 <!--    </th:block>-->
+                    </div>
                     <th:block th:include="~{_fragments/nav-user}"/>
                 </th:block>
-             <!--   <th:block th:if="${session.user==null}">-->
                 <th:block sec:authorize="isAnonymous()">
                     <th:block th:include="~{_fragments/nav-guest}"/>
                 </th:block>

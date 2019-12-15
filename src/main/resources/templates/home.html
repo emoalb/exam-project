@@ -5,7 +5,7 @@
     <th:block th:if="${session.user!=null}">
         <th:block th:include="~{_fragments/home-logged-head}"/>
         <div class="py-5 d-flex align-content-center justify-content-center" id="all-posts">
-            <div id="loader" class="spinner-border" role="status">
+            <div id="loader" class="spinner-border" role="status"></div>
         </div>
         <script src="/js/posts.js"></script>
     </th:block>

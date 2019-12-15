@@ -13,18 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class HomeController extends BaseController {
 
-    private final AuthService authService;
 
     @Autowired
-    public HomeController(AuthService authService) {
+    public HomeController() {
 
-        this.authService = authService;
     }
 
     @GetMapping("/")
     @ResponseBody
     public ModelAndView getHomePage() {
-       this.authService.SeedModerator();
         return super.render("home");
     }
 }
