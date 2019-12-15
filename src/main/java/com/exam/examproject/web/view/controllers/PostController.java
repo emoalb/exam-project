@@ -69,14 +69,7 @@ public class PostController extends BaseController {
         return super.render("posts/edit", "post", editPostServiceModel);
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ModelAndView putEditPost(@RequestBody String jsonResponse, HttpSession session) {
-        System.out.println(jsonResponse);
-        EditPostViewModel editViewModel = this.gson.fromJson(jsonResponse, EditPostViewModel.class);
-        EditPostServiceModel editPostServiceModel = this.modelMapper.map(editViewModel, EditPostServiceModel.class);
-        this.postService.updatePost(editPostServiceModel);
-        return super.redirect("/");
-    }
+
 
     @GetMapping("/details/{id}")
     public ModelAndView getDetailsPost(@PathVariable("id") String id) {
