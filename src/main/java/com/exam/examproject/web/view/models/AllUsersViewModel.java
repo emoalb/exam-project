@@ -1,10 +1,14 @@
 package com.exam.examproject.web.view.models;
 
-import com.exam.examproject.domain.enums.UserRole;
+
+import com.exam.examproject.domain.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,5 +22,7 @@ public class AllUsersViewModel {
 
     private String email;
 
-    private String role;
+    private Date creationDate;
+
+    private String authority;
 }

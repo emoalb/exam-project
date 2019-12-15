@@ -44,6 +44,9 @@ public class AuthServiceImpl implements AuthService {
         User user = this.modelMapper.map(registerUserServiceModel, User.class);
         user.setPassword(this.hashingService.hash(user.getPassword()));
         user.setCreationDate(this.datesService.getCurrentDate());
+        Role role = new Role();
+        role.setAuthority("ROLE_USER");
+        user.setAuthorities(new HashSet<>(Collections.singletonList(role)));
         this.userRepository.save(user);
     }
 
@@ -51,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void SeedModerator() {
 
-        List<User> users = this.userRepository.getAdminList("ROLE_ADMIN");
+        List<User> users = this.userRepository.getAdminList("ROLE_OWNER");
         if (!users.isEmpty()) {
             System.out.println("Moderator already exist");
             return;
@@ -60,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
         String email = "some@email.com";
         String password = this.hashingService.hash("12345");
         Role role = new Role();
-        role.setAuthority("ROLE_ADMIN");
+        role.setAuthority("ROLE_OWNER");
         SeedUserServiceModel seedUserServiceModel =
                 new SeedUserServiceModel(username, password, email, new HashSet<>(Collections.singletonList(role)));
         this.seedUserService.SeedUser(seedUserServiceModel);

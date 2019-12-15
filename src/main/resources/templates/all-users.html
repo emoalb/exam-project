@@ -6,6 +6,7 @@
             <tr>
                 <th scope="col">&#35;</th>
                 <th scope="col">User</th>
+                <th scope="col">Created on</th>
                 <th scope="col">Role</th>
             </tr>
             </thead>
@@ -14,21 +15,32 @@
                 <tr>
                     <th scope="row"><i style="margin-right: 0.5rem;" class="far fa-user"></i></th>
                     <td>[[${user.username}]]</td>
-                    <td>[[${user.role}]]</td>
-                    <th:block th:if="${user.role!='MODERATOR'}">
+                    <td>[[${#dates.format(user.creationDate,'dd-MM-yyyy HH:mm')}]]</td>
+                    <th:block th:if="${#strings.equals(user.authority,'ROLE_USER')}">
+                        <td>User</td>
                         <td><a class="btn btn-outline-danger" th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a>
                         </td>
-                        <th:block th:if="${user.role!='ADMIN'}">
-                        <td><a class="btn btn-outline-secondary" th:href="@{/users/admin/{id}(id=${user.id})}">Upgrade to
-                            admin</a></td>
-                        </th:block>
+                        <td><a class="btn btn-outline-secondary" th:href="@{/users/admin/{id}(id=${user.id})}">
+                            Upgrade to admin</a></td>
                     </th:block>
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
-    </th:block>
-    <th:block th:unless="${!allUsers.empty}">
+                    <th:block th:if="${#strings.equals(user.authority,'ROLE_ADMIN')}">
+                        <td>Admin</td>
+                        <td><a class="btn btn-outline-danger" th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a>
+                        <td><a class="btn btn-outline-secondary" th:href="@{/users/demote/{id}(id=${user.id})}">
+                            Demote to user</a></td>
+                        </td>
+                    </th:block>
+                    <th:block th:if="${#strings.equals(user.authority,'ROLE_OWNER')}">
+                        <td>Owner</td>
+                    </th:block>
 
+            </th:block>
+            </tr>
     </th:block>
+    </tbody>
+    </table>
+</th:block>
+<th:block th:unless="${!allUsers.empty}">
+
+</th:block>
 </th:block>

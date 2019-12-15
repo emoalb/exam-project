@@ -17,7 +17,7 @@
                         <a th:href="@{/comments/all/{id}(id=${post.id})}" class="btn btn-sm btn-outline-success">Comments</a>
                     </div>
                 </div>
-                <th:block th:if="${session.user.username == post.creatorUsername or session.user.userRole =='ADMIN'}">
+                <th:block th:if="${session.user.username == post.creatorUsername}">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a th:href="@{/posts/edit(id=${post.id})}" class="btn btn-sm btn-outline-warning">Edit</a>
@@ -26,6 +26,15 @@
                         </div>
                     </div>
                 </th:block>
+                    <th:block th:unless="${session.user.username == post.creatorUsername}">
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a th:href="@{/posts/edit(id=${post.id})}" class="btn btn-sm btn-outline-warning">Edit</a>
+                            <a th:href="@{/posts/delete(id=${post.id})}"
+                               class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                    </th:block>
                 </div>
                 <a class="btn btn-primary" th:href="@{/}">Back</a>
             </div>

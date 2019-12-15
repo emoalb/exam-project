@@ -32,29 +32,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                    .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/")
-                    .permitAll()
+                .permitAll()
                 .antMatchers("/favicon.ico", "/js/*", "/css/*", "/img/*")
-                    .permitAll()
+                .permitAll()
                 .antMatchers("/users/register")
-                    .permitAll()
+                .permitAll()
                 .antMatchers("/users/login")
-                    .permitAll()
+                .permitAll()
                 .antMatchers("/about")
-                    .permitAll()
+                .permitAll()
+                .antMatchers("/users/all").access("hasRole('ROLE_OWNER')")
                 .anyRequest()
-                    .authenticated()
+                .authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/users/login")
-                    .permitAll()
+                .formLogin()
+                .loginPage("/users/login")
+                .permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(this.authenticationSuccessHandler)
                 .and()
-                    .logout().logoutUrl("/users/logout")
-                    .permitAll();
+                .logout().logoutUrl("/users/logout")
+                .permitAll();
     }
 
     @Bean
@@ -70,8 +71,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     RedirectStrategy redirectStrategy() {
-        return  new DefaultRedirectStrategy();
+        return new DefaultRedirectStrategy();
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth

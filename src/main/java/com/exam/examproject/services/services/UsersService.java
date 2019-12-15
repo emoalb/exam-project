@@ -9,9 +9,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface UsersService extends UserDetailsService {
-  List<AllUsersServiceModel> allUsers();
-  UserServiceModel findUserByName(String name);
-  void deleteUserById(String id) throws UserNotFoundException;
-  void upgradeToAdmin(String id) throws UserNotFoundException;
-  UserServiceModel findUserById(String userId) throws UserNotFoundException;
+    List<AllUsersServiceModel> allUsers();
+
+
+
+    void deleteUserById(String id) throws UserNotFoundException;
+
+    void upgradeToAdmin(String id) throws UserNotFoundException;
+
+    UserServiceModel findUserById(String userId) throws UserNotFoundException;
+
+    void demoteUser(String id);
 }

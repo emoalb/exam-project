@@ -25,7 +25,6 @@ public class AuthenticatedUserServiceImpl implements AuthenticatedUserService {
             return null;
         }
         LoginResponseModel loginResponseModel = this.modelMapper.map(authentication.getPrincipal(), LoginResponseModel.class);
-        loginResponseModel.setUserRole("USER");
         return loginResponseModel;
     }
 }

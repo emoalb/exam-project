@@ -43,4 +43,9 @@ public class UsersController extends BaseController {
         this.usersService.upgradeToAdmin(id);
         return super.redirect("/users/all");
     }
+    @GetMapping("/demote/{id}")
+    public ModelAndView getDemoteUser(@PathVariable("id") String id) {
+        this.usersService.demoteUser(id);
+        return super.redirect("/users/all");
+    }
 }

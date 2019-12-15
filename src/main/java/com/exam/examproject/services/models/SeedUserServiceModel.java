@@ -1,7 +1,6 @@
 package com.exam.examproject.services.models;
 
 import com.exam.examproject.domain.entities.Role;
-import com.exam.examproject.domain.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
