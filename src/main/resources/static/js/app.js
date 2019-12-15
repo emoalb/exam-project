@@ -16,18 +16,36 @@ $(() => {
             method: 'POST',
             data: JSON.stringify({id, title, pictureUrl, description, creatorUsername}),
             success: function (result) {
-                //location.href = "/"
-                console.log("Success");
-                console.log(result)
+                location.href = "/";
             },
-            error:function (data, textStatus, xhr) {
+            error: function (data, textStatus, xhr) {
                 console.log("Error");
-                console.log(data.responseText);
+                let errorObj = JSON.parse(data.responseText);
+                if (errorObj["title"] !== undefined) {
+                    appendErrorMessage(errorObj["title"], "#post-title-edit");
+                }
+                if (errorObj["pictureUrl"] !== undefined) {
+                    appendErrorMessage(errorObj["pictureUrl"], "#post-url-edit");
+                }
+                if (errorObj["description"] !== undefined) {
+                    appendErrorMessage(errorObj["description"], "#post-description-edit");
+                }
+
             }
         });
     })
 });
 
+function appendErrorMessage(errorMsg, id) {
+    $(id).addClass("is-invalid");
+    let error = document.createElement("div");
+    $(error).addClass("invalid-feedback");
+    $(error).html(errorMsg);
+    $(error).insertAfter(id);
+    setTimeout(() => {
+        $(error).empty().fadeOut();
+    }, 5000)
+}
 
 
 

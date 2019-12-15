@@ -37,9 +37,10 @@ public class PostsApiController {
         return new ResponseEntity<>(postResponseModels, HttpStatus.OK);
 
     }
+
     @RequestMapping(value = "/api/edit", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     @ResponseBody
-    public ResponseEntity<Map<String,String>> putEditPost(@Valid @RequestBody EditPostViewModel jsonResponse, BindingResult bindingResult) {
+    public ResponseEntity<Map<String,String>> editPost(@Valid @RequestBody EditPostViewModel jsonResponse, BindingResult bindingResult) {
         System.out.println(jsonResponse);
      Map<String,String> errors = new HashMap<>();
        if(bindingResult.hasErrors()){
