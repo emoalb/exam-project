@@ -1,5 +1,6 @@
 package com.exam.examproject.domain.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.TreeSet;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -65,4 +67,11 @@ public class User extends BaseEntity {
 
     @OneToMany(targetEntity = Comment.class, mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+  public   User(String username, String password, String email){
+        this.username=username;
+        this.password=password;
+        this.email=email;
+
+    }
 }
