@@ -32,4 +32,5 @@ public class UsersServiceTest {
         Mockito.when(mockedUserRepository.findById(userId)).thenReturn(Optional.empty());
         assertThrows(UserNotFoundException.class, () -> usersService.deleteUserById(userId));
     }
+
 }

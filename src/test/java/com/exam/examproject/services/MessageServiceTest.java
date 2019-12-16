@@ -1,8 +1,10 @@
 package com.exam.examproject.services;
 
+import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.MessageRepository;
 import com.exam.examproject.repositories.UserRepository;
+import com.exam.examproject.services.services.HashingService;
 import com.exam.examproject.services.services.MessagesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,20 +24,30 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class MessageServiceTest {
     @BeforeEach
-    private void setup(){
+    private void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
     @MockBean
     UserRepository userRepository;
 
+    @MockBean
+    HashingService hashingService;
     @Autowired
     MessagesService messagesService;
 
     @Test
-    void getAllMessages_whenUserIdIsInvalid_shouldThrowUserNotFoundException(){
+    void getAllMessages_whenUserIdIsInvalid_shouldThrowUserNotFoundException() {
         String userId = "1233456";
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.empty());
-        assertThrows(UserNotFoundException.class,()->messagesService.getAllMessages(userId));
+        assertThrows(UserNotFoundException.class, () -> messagesService.getAllMessages(userId));
+    }
+
+    @Test
+    void sendMessage_whenSenderIsInvalid_shouldThrowUserNotFoundException() {
+
+        String senderId = "123456";
+
+
     }
 }

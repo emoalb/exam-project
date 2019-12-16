@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
-public class LoginControllerTest {
+public class AuthControllerTest {
     @BeforeEach
     private void init() {
         MockitoAnnotations.initMocks(this);
@@ -31,4 +31,12 @@ public class LoginControllerTest {
         mockMvc.perform(get("/users/login")).andExpect(status().isOk()).andExpect(view().name("_layouts/index"))
                 .andExpect(model().attribute("view","login"));
     }
+
+
+    @Test
+    void getLRegister_shouldReturnRegisterViewWithResponse200() throws Exception {
+        mockMvc.perform(get("/users/register")).andExpect(status().isOk()).andExpect(view().name("_layouts/index"))
+                .andExpect(model().attribute("view","register"));
+    }
+
 }

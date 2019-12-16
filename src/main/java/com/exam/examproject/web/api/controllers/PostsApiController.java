@@ -32,6 +32,7 @@ public class PostsApiController {
     @GetMapping(value = "/api/posts")
     public ResponseEntity<List<PostResponseModel>> getPosts() {
         List<PostServiceModel> postServiceModels = this.postsService.getAllPosts();
+
         List<PostResponseModel> postResponseModels = postServiceModels.stream()
                 .map(post -> this.modelMapper.map(post, PostResponseModel.class)).collect(Collectors.toList());
         return new ResponseEntity<>(postResponseModels, HttpStatus.OK);
