@@ -34,7 +34,7 @@ public class PostControllerTest extends TestBaseControllers {
 
     @WithMockUser()
     @Test
-    void getDetailsPost_whenPostIdValid_ShouldWork() throws Exception {
+    void getDetailsPost_whenPostIdValid_shouldResponse200andReturnDetailsPostView() throws Exception {
         MockHttpSession session = new MockHttpSession();
         String postId = "someId";
 

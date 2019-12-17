@@ -11,14 +11,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,13 +63,13 @@ public class PostsApiControllerTest {
         post.setDescription("dordfhdhfudih");
         post.setCreator(new User());
         Mockito.when(postRepository.findAll()).thenReturn(List.of(post));
-        String username="emo";
-        String password = this.hashingService.hash("1");
-         Post[] result =
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+       PostServiceModel[] result =
                 getRestTemplate()
                         .getForObject(
                                 getFullUrl("/api/posts"),
-                                Post[].class);
+                                PostServiceModel[].class);
 
         assertEquals(1, result.length);
         assertEquals(post.getId(), result[0].getId());
