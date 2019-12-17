@@ -56,10 +56,10 @@ public class AuthServiceImpl implements AuthService {
 
         List<User> users = this.userRepository.getAdminList("ROLE_OWNER");
         if (!users.isEmpty()) {
-            System.out.println("Moderator already exist");
+            System.out.println("Owner user already exist");
             return;
         }
-        String username = "moderator";
+        String username = "owner";
         String email = "some@email.com";
         String password = this.hashingService.hash("12345");
         Role role = new Role();

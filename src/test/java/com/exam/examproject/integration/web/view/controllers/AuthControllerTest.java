@@ -1,5 +1,6 @@
-package com.exam.examproject.web.view.controllers;
+package com.exam.examproject.integration.web.view.controllers;
 
+import com.exam.examproject.integration.web.view.TestBaseControllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,17 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@ExtendWith(MockitoExtension.class)
-@AutoConfigureMockMvc
-public class AuthControllerTest {
-    @BeforeEach
-    private void init() {
-        MockitoAnnotations.initMocks(this);
-    }
 
-    @Autowired
-    protected MockMvc mockMvc;
+public class AuthControllerTest extends TestBaseControllers {
+
 
     @Test
     void getLogin_shouldReturnLoginViewWithResponse200() throws Exception {
@@ -34,7 +27,7 @@ public class AuthControllerTest {
 
 
     @Test
-    void getLRegister_shouldReturnRegisterViewWithResponse200() throws Exception {
+    void getRegister_shouldReturnRegisterViewWithResponse200() throws Exception {
         mockMvc.perform(get("/users/register")).andExpect(status().isOk()).andExpect(view().name("_layouts/index"))
                 .andExpect(model().attribute("view","register"));
     }

@@ -1,4 +1,4 @@
-package com.exam.examproject.web.api.controllers;
+package com.exam.examproject.integration.web.api.controllers;
 
 import com.exam.examproject.domain.entities.Post;
 import com.exam.examproject.domain.entities.User;
@@ -53,7 +53,7 @@ public class PostsApiControllerTest {
 
         return getRestTemplate();
     }
-    @WithUserDetails("user@company.com")
+    @WithMockUser()
     @Test
     void getALlPosts_withPost_shouldReturnPost() {
         Post post = new Post();
@@ -66,7 +66,7 @@ public class PostsApiControllerTest {
         String username="emo";
         String password = this.hashingService.hash("1");
          Post[] result =
-                getRestTemplate(username,password)
+                getRestTemplate()
                         .getForObject(
                                 getFullUrl("/api/posts"),
                                 Post[].class);

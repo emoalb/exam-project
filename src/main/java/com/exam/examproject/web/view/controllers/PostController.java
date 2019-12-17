@@ -1,6 +1,6 @@
 package com.exam.examproject.web.view.controllers;
 
-import com.exam.examproject.common.Constants;
+
 import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.services.models.CreatePostServiceModel;
 import com.exam.examproject.services.models.DetailsPostServiceModel;
