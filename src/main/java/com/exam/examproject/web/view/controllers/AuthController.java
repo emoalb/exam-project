@@ -9,6 +9,7 @@ import com.exam.examproject.web.view.models.RegisterUserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
@@ -30,7 +32,7 @@ public class AuthController extends BaseController {
     }
 
     @GetMapping("/register")
-    public ModelAndView getRegisterForm(HttpSession session) {
+    public ModelAndView getRegisterForm(@ModelAttribute("registerUserViewModel") RegisterUserViewModel registerUserViewModel, HttpSession session) {
         return super.render("register");
     }
 
@@ -41,12 +43,16 @@ public class AuthController extends BaseController {
 
 
     @PostMapping("/register")
-    public ModelAndView postRegisterForm(@ModelAttribute RegisterUserViewModel registerUserViewModel, HttpSession session) {
+    public ModelAndView postRegisterForm(@Valid @ModelAttribute("registerUserViewModel") RegisterUserViewModel registerUserViewModel, BindingResult bindingResult, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return super.render("register");
+
+        }
         RegisterUserServiceModel registerUserServiceModel = this.modelMapper.map(registerUserViewModel, RegisterUserServiceModel.class);
         try {
             this.authService.register(registerUserServiceModel);
         } catch (Exception e) {
-            return super.renderError(e.getMessage());
+            return super.render("register","isInvalid",true);
         }
 
         return super.redirect("/users/login");
