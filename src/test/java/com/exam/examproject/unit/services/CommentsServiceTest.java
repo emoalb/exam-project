@@ -3,6 +3,7 @@ package com.exam.examproject.unit.services;
 
 import com.exam.examproject.domain.entities.Comment;
 import com.exam.examproject.domain.entities.Post;
+import com.exam.examproject.errors.PostNotFoundException;
 import com.exam.examproject.repositories.CommentRepository;
 import com.exam.examproject.repositories.PostRepository;
 
@@ -57,10 +58,19 @@ public class CommentsServiceTest {
         comments.add(comment);
         Mockito.when(mockPostRepository.findById(postId)).thenReturn(Optional.of(post));
         Mockito.when(mockCommentRepository.findAllByPost_Id(postId)).thenReturn(comments);
-       int result = commentsService.getAllComments(postId).size();
+        int result = commentsService.getAllComments(postId).size();
         System.out.println();
-       assertEquals(comments.size(),result);
+        assertEquals(comments.size(), result);
 
     }
 
+
+    @Test(expected = PostNotFoundException.class)
+    public void getAllComments_shouldThrowPostNotFoundException_whenPostIdIsInvalid() {
+        String postId = "id";
+        Mockito.when(mockPostRepository.findById(postId)).thenReturn(Optional.empty());
+        commentsService.getAllComments(postId).size();
+
+
+    }
 }
