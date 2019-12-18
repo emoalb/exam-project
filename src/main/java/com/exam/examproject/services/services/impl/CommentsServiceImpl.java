@@ -43,7 +43,6 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public List<CommentServiceModel> getAllComments(String postId) throws PostNotFoundException {
         Optional<Post> post = this.postRepository.findById(postId);
-
         if (post.isEmpty()) throw new PostNotFoundException(Constants.POST_NOT_FOUND_MESSAGE);
         List<Comment> allComments = this.commentRepository.findAllByPost_Id(postId);
         return allComments.stream().map(comment -> this.modelMapper.map(comment, CommentServiceModel.class)).collect(Collectors.toList());

@@ -47,7 +47,6 @@ public class PostsServiceTest {
 
     private DetailsPostServiceModel detailsPostServiceModel;
 
-    private EditPostServiceModel editPostServiceModel;
 
 
     @Before

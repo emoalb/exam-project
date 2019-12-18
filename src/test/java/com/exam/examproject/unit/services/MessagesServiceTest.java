@@ -1,14 +1,12 @@
 package com.exam.examproject.unit.services;
 
-import com.exam.examproject.common.Constants;
+
 import com.exam.examproject.domain.entities.Message;
 import com.exam.examproject.domain.entities.User;
 import com.exam.examproject.errors.UserNotFoundException;
-import com.exam.examproject.repositories.MessageRepository;
 import com.exam.examproject.repositories.UserRepository;
 import com.exam.examproject.services.models.CreateMessageServiceModel;
-import com.exam.examproject.services.services.HashingService;
-import com.exam.examproject.services.services.MessagesService;
+
 
 import com.exam.examproject.services.services.impl.MessagesServiceImpl;
 import org.junit.Before;
@@ -22,7 +20,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
@@ -33,8 +30,6 @@ public class MessagesServiceTest {
     @InjectMocks
     MessagesServiceImpl messagesService;
 
-    @Mock
-    MessageRepository mockMessageRepository;
 
     @Mock
     UserRepository mockUserRepository;
@@ -63,8 +58,6 @@ public class MessagesServiceTest {
         String senderName = "sender";
         String receiverName = "receiver";
         Mockito.when(mockUserRepository.findByUsername(senderName)).thenReturn(Optional.empty());
-        Mockito.when(mockUserRepository.findByUsername(receiverName)).thenReturn(Optional.of(user));
-        //Mockito.when(mockMessageRepository.save(message)).thenThrow(new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE));
         CreateMessageServiceModel createMessageServiceModel = new CreateMessageServiceModel();
         createMessageServiceModel.setSender(senderName);
         createMessageServiceModel.setReceiver(receiverName);

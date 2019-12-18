@@ -38,7 +38,6 @@ public class ContactsServiceImpl implements ContactsService {
             throw new UserNotFoundException(Constants.USER_NOT_FOUND_MESSAGE);
 
         Contact contact = this.modelMapper.map(contactServiceModel, Contact.class);
-     //   contact.setUser(user.get());
         this.contactRepository.save(contact);
 
     }
