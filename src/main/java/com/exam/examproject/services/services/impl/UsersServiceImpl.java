@@ -34,7 +34,6 @@ public class UsersServiceImpl implements UsersService {
 
         List<User> users = this.userRepository.findAllByOrderByUsernameAsc();
 
-
         List<AllUsersServiceModel> allUsersServiceModels = users.stream().map(user ->
                 new AllUsersServiceModel(user.getId(), user.getUsername(), user.getEmail(), user.getCreationDate(), ((Role) user.getAuthorities().toArray()[0]).getAuthority())
         ).collect(Collectors.toList());

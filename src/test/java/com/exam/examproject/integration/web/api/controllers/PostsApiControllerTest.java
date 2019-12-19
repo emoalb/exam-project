@@ -63,8 +63,7 @@ public class PostsApiControllerTest {
         post.setDescription("dordfhdhfudih");
         post.setCreator(new User());
         Mockito.when(postRepository.findAll()).thenReturn(List.of(post));
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+
        PostServiceModel[] result =
                 getRestTemplate()
                         .getForObject(

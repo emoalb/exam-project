@@ -82,7 +82,6 @@ public class PostsServiceTest {
         List<Post> posts = new ArrayList<>();
         posts.add(post);
         posts.add(post);
-        posts.add(post);
         Mockito.when(mockPostRepository.findAll()).thenReturn(posts);
         int result = postsService.getAllPosts().size();
         assertEquals(posts.size(), result);
