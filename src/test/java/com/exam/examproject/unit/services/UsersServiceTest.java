@@ -5,6 +5,8 @@ import com.exam.examproject.errors.UserNotFoundException;
 import com.exam.examproject.repositories.UserRepository;
 
 
+import com.exam.examproject.services.models.AllUsersServiceModel;
+import com.exam.examproject.services.models.UserServiceModel;
 import com.exam.examproject.services.services.UsersService;
 import com.exam.examproject.services.services.impl.UsersServiceImpl;
 import org.junit.Before;
@@ -19,6 +21,7 @@ import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +39,7 @@ public class UsersServiceTest {
 
     @Before
     public void init() {
-    user = Mockito.mock(User.class);
+        user = Mockito.mock(User.class);
     }
 
 
@@ -51,9 +54,11 @@ public class UsersServiceTest {
     public void getAllUsers_shouldReturnAllUsers() {
         List<User> users = new ArrayList<>();
         users.add(user);
-        Mockito.when(mockedUserRepository.findAll()).thenReturn(users);
-        int result = usersService.allUsers().size();
-        assertEquals(users.size(),result);
+        users.add(user);
+        Mockito.when(mockedUserRepository.findAllByOrderByUsernameAsc()).thenReturn(users);
+     List<AllUsersServiceModel> allUsersServiceModels = usersService.allUsers();
+        System.out.println();
+      assertEquals(users.size(), allUsersServiceModels.size());
     }
 
 }
